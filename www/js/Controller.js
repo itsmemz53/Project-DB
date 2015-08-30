@@ -196,7 +196,7 @@ map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 console.log(map);
 var ind=null;
                  console.log("here")
-                 console.log(store);
+                 
 /*var Keyword=store.toLowerCase();
 for(var i=0;i<keyWords.length;i++){
     if(keyWords[i].search(Keyword)!= -1){
@@ -256,13 +256,14 @@ for(var i=0;i<keyWords.length;i++){
           service.nearbySearch(request, callback);
         })
 }
- $scope.searchLink = function(store) {  
+ $scope.searchLink = function(store,from) {  
 
 var geocoder = new google.maps.Geocoder();
              geocoder.geocode({
-              "address": $scope.from
+              "address": from
             },
             function(results, status) {
+             console.log(from);
               if (status == google.maps.GeocoderStatus.OK){
                 slat=results[0].geometry.location.lat();
                 slong=results[0].geometry.location.lng();
@@ -271,8 +272,7 @@ var geocoder = new google.maps.Geocoder();
               else{
                 console.log("Unable to retrieve your address<br />");
             }
-                slat=results[0].geometry.location.lat();
-                slong=results[0].geometry.location.lng();
+                
                  pos=new google.maps.LatLng(slat, slong);
             console.log(pos)
              infowindow = new google.maps.InfoWindow({
