@@ -1,0 +1,74 @@
+/* Empty. Add your own CSS if you like */
+.title h1{
+    color:blue;
+}
+.item-avatar img {
+    background-color: white;
+}
+.item-center{
+    text-align: center;
+}
+.background, .background .pane, .background .item, .background .item-complex .item-content .col{
+    background-color: #d3ffce;
+}
+
+.heading{
+    font-family: 'Pacifico', cursive;
+    font-size: 100px;
+}
+.text-center{
+    text-align: center;
+}
+#map_nearest {
+             height: 300px;
+            position: relative;
+            width: 100%;
+        }
+.size{
+    width: 100%;
+    height : 500px;
+}
+.loader{
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    height: 85px;
+    text-align: center;
+}
+.error-container {
+    margin: 5px 0;
+}
+
+.error-container:last-child {
+    margin: 5px 0 0;
+}
+
+.error {
+    padding: 10px 16px;
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #555;
+    vertical-align: middle;
+}
+
+.error i {
+    font-size: 24px;
+    color: #B83E2C;
+    vertical-align: middle;
+}
+
+.last-error-container > .error {
+    padding: 10px 16px 0;
+}
+
+.has-errors {
+    border-bottom: 3px solid #B83E2C;
+}
+
+.no-errors {
+    border-bottom: 3px solid green;
+}
+.back-color {
+    background-color: white;
+}

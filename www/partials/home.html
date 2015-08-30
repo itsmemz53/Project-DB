@@ -1,0 +1,58 @@
+
+
+   
+  <ion-pane >
+  <input value="Products" type="text" name="page"></input>
+<ion-header-bar class="bar-balanced">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon-round" ng-click="toggleLeft"> </button>
+        
+  </ion-header-bar>
+  <ion-header-bar class="bar-subheader bar-dark">
+  <h1 class="title">Locate Map Location</h1>
+  </ion-header-bar>
+<ion-content >
+ 
+  <div data-role="content" class="list">   
+        
+         
+           
+               
+                     <label  class="item item-input item-stacked-label"><h2><span class="input-label">Search Things :</span></h2>
+                  <strong> <input type="text" id="store" ng-model="store" class="store" name="store" placeHolder="Hospital" required="required" data-clear-btn="true"> </strong>
+                   </label>
+                
+            
+          
+               
+                  
+                       <label for="name2b" class="item item-input item-stacked-label" <span class="input-label">Your Location :</span>
+                    <input type="text" id="current" ng-model="from" class="from" name="from" placeHolder="Please Enter Location" required="required" data-clear-btn="true">
+
+                      </label>
+                       <button type="submit" ng-click="fromLink(store)" class="button button-small button-block button-royal" data-inline="true" ><i class='ion-location' style="font-size:20px">&nbsp</i>Get Location</button>
+                    
+                        <button type="submit" ng-click="searchLink(store)" class="button button-full button-calm" data-inline="true" ><i class='ion-search' style="font-size:35px">&nbsp</i>Search Location</button>
+                        
+                    
+                        <button type="submit" id="button2" ng-click="nearHosp()" data-inline="true" class="button button-full button-balanced" ><i class='ion-ios-search-strong' style="font-size:35px">&nbsp</i>Search Nearby</button>
+                  
+            
+          
+               <div id="map-canvas" class="map rounded item size" ng-show="mapItem"></div>
+                <button class="button button-full" ng-click="showMap()">Show in Map</button>
+                <div id="results"  class="panel" ng-show="Results">
+
+              <h2>Results</h2>
+              <div ng-repeat="place in places">
+              {{place.name}}
+            </div>
+             
+        </div>
+          
+       
+  </ion-content>
+
+
+</ion-pane>
+    
+   
