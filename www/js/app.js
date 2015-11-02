@@ -45,16 +45,14 @@ app.run(function($ionicPlatform) {
             controller: "logOut"
 
         });
-          
-        $stateProvider.state('isAuthenticated', {
-            url: '/#',
-            cache:false,
-            controller: "Authentication"
+        $stateProvider.state('main', {
+            url: '/',
+            templateUrl: '/partials/main.html',
+            controller: "Main"
 
 
         });
-      
          
-        $urlRouterProvider.otherwise('home');
+        $urlRouterProvider.otherwise('/');
 
     })

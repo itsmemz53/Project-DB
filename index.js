@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var db = require('monk')('f9:admin@ds035553.mongolab.com:35553/db-project');
-
+var categories = ['']
 
 function findByUsername(username, fn) {
     var collection = db.get('loginUsers');
@@ -32,7 +32,6 @@ function findById(id, fn) {
         
 
         if (docs) {
-            RecieveId(docs.username);
             return fn(null, docs);
         }
         else {
@@ -153,7 +152,7 @@ app.post('/register', function (req, res) {
                             res.send("There was a problem adding the information to the database.");
                         }
                         else {
-                            res.redirect("products");
+                            res.send(true);
                         }
                     });
                 }
@@ -166,6 +165,20 @@ app.post('/register', function (req, res) {
 
 });
 
+app.post('/ProductItems',function(req,res){
+    var collection= req.db.get("ProductItems");
+    var obje={Name : 'Mohammad'};
+     collection.insert(obje, function (err, doc) {
+                        if (err) {
+                            // If it failed, return error
+                            res.send("There was a problem adding the information to the database.");
+                        }
+                        else {
+                            res.send("Done");
+                        }
+                    });
+
+});
 
 app.get('/logout', function (req, res) {
     req.session.destroy();
@@ -180,7 +193,7 @@ app.get('/isAuthenticated', function (req, res) {
     else
         res.send(false);
 });
-var prod;
+
 
 
 

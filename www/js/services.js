@@ -10,6 +10,15 @@ angular.module('dbProject.services',[])
             };
             return $http(req);
         }
+       ergastAPI.sendProducts = function (userObj) {
+            var req = {
+                method: 'POST',
+                url: '/ProductItems',
+                data: userObj
+                
+            };
+            return $http(req);
+        }
        
        
          ergastAPI.logout = function () {

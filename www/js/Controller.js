@@ -108,8 +108,8 @@ angular.module('dbProject.controllers', [])
 
 
     $scope.register = function (form) {
-        var abc={username:$scope.username,email:$scope.email,password:$scope.password}
-
+     var abc={username:$scope.username,email:$scope.email,password:$scope.password}
+   
         console.log("IwantToRegister")
         console.log(abc);
 
@@ -149,21 +149,17 @@ angular.module('dbProject.controllers', [])
                     alert("Error")
                     $scope.username = "";
                     $scope.password = "";
-                    $location.path('login')
+                    $location.path('/login')
 
                 }
                 else {
                     //   $rootScope.loggedIn=true;
-                    $location.path('watchproducts')
+                    $location.path('/home')
 
                 }
             });
         }
     }
-   // Registers a device for push notifications and stores its token
-     // Handles incoming device tokens
-  
-  
   
 }]).controller('Authentication', ['$scope', 'myService','$location', function ($scope, myService,$location) {
     console.log($scope.page);
@@ -178,6 +174,9 @@ angular.module('dbProject.controllers', [])
             
 
     });
+}]).controller('Main', ['$scope', 'myService','$location', function ($scope, myService,$location) {            
+
+    
 }]).controller('Maps', ['$scope', 'myService','$location', function ($scope, myService,$location) {
   var map;
 var infowindow;
@@ -185,7 +184,11 @@ var pos;
 var slat;
 var slong;
 $scope.mapItem=false;
-
+myService.sendProducts().success(function(res){
+  if(res==true){
+    console.log("done");
+  }
+});
 function initialize() {
   var pyrmont;
   var mapOptions = {
@@ -196,7 +199,7 @@ map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 console.log(map);
 var ind=null;
                  console.log("here")
-                 
+                 console.log(store);
 /*var Keyword=store.toLowerCase();
 for(var i=0;i<keyWords.length;i++){
     if(keyWords[i].search(Keyword)!= -1){
@@ -247,7 +250,7 @@ for(var i=0;i<keyWords.length;i++){
              var request = {
             location: pos,
             radius: 1000,
-            types: [keyWords[0]]
+            types: ['restaurant']
             };
            ind=null;
         infowindow = new google.maps.InfoWindow();
@@ -256,14 +259,13 @@ for(var i=0;i<keyWords.length;i++){
           service.nearbySearch(request, callback);
         })
 }
- $scope.searchLink = function(store,from) {  
+ $scope.searchLink = function(store) {  
 
 var geocoder = new google.maps.Geocoder();
              geocoder.geocode({
-              "address": from
+              "address": $scope.from
             },
             function(results, status) {
-             console.log(from);
               if (status == google.maps.GeocoderStatus.OK){
                 slat=results[0].geometry.location.lat();
                 slong=results[0].geometry.location.lng();
@@ -272,7 +274,8 @@ var geocoder = new google.maps.Geocoder();
               else{
                 console.log("Unable to retrieve your address<br />");
             }
-                
+                slat=results[0].geometry.location.lat();
+                slong=results[0].geometry.location.lng();
                  pos=new google.maps.LatLng(slat, slong);
             console.log(pos)
              infowindow = new google.maps.InfoWindow({
@@ -290,7 +293,7 @@ var geocoder = new google.maps.Geocoder();
              var request = {
             location: pos,
             radius: 1000,
-            types: [keyWords[0]]
+            types: ['restaurant']
            
             };
            
