@@ -20,6 +20,15 @@ angular.module('dbProject.services',[])
             return $http(req);
         }
        
+         ergastAPI.sendShop = function (userObj) {
+            var req = {
+                method: 'POST',
+                url: '/shopProfile',
+                data: userObj
+                
+            };
+            return $http(req);
+        }
        
          ergastAPI.logout = function () {
             var req = {

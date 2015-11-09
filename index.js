@@ -164,10 +164,82 @@ app.post('/register', function (req, res) {
     // Submit to the DB
 
 });
+app.post('/shopProfile',function(req,res){
+
+
+
+var collection = db.get("shopProfile");
+var FreshObj={shopName:req.body.shopName,shopAddr:req.body.shopAddr, shopArea:req.body.shopArea,shopLong:req.body.shopLong, shopLat:req.body.shopLat};
+var obj={};
+    
+    var dum=req.body.category;
+
+  collection.findOne({category: dum}, {}, function (e, docs2) {
+    if(docs2){
+       collection.remove({});
+        console.log("Ye purana hai",docs2.Shops);
+  
+       
+        console.log("Ye naya hai ", FreshObj);
+        var Comp={};
+        array=null;
+        array=[];
+        var co=0;
+ for(var z in docs2.Shops){
+    co++;
+ }
+ console.log(co);
+        for(var k=0;k<co;k++){
+            if(docs2.Shops[k]!=null){
+             array.push(docs2.Shops[k]);
+         }
+            
+         }
+        
+          
+           array.push(FreshObj);
+           console.log(array.length)
+           for(var l=0 ;l<array.length;l++){
+            Comp[l]=array[l];
+           }
+           obj={category : dum, Shops:Comp};
+               
+ collection.insert(obj, function (err, doc) {
+                       
+                        if (err) {
+                            // If it failed, return error
+                            res.send(false);
+                        }
+                        else {
+                            res.send(true);
+                        }
+                    });
+    }
+else{
+           var dummy={'0':FreshObj};
+     obj={category : dum, Shops:dummy};
+ collection.insert(obj, function (err, doc) {
+                       
+                        if (err) {
+                            // If it failed, return error
+                            res.send(false);
+                        }
+                        else {
+                            res.send(true);
+                        }
+                    });
+
+}
+});
+
+});
 
 app.post('/ProductItems',function(req,res){
     var collection= req.db.get("ProductItems");
-    var obje={Name : 'Mohammad'};
+    var obj=[
+
+];
+   /* var obje={categoryName:'ladiesShoes' ,items:obj};
      collection.insert(obje, function (err, doc) {
                         if (err) {
                             // If it failed, return error
@@ -176,7 +248,25 @@ app.post('/ProductItems',function(req,res){
                         else {
                             res.send("Done");
                         }
-                    });
+                    });*/
+/* collection.findOne({categoryName:"artificialJewelery"}, {}, function (e, docs2) {
+        if(docs2){
+            var al=docs2.items;
+
+            for (var i = 0; i < al.length; i++) {
+                if(al[i].item_name == ' Bali'){
+                    console.log("True");
+                }
+                else{
+                    console.log("chp");
+                }
+            };
+          
+        }
+        else{
+            console.log("fuckoff");
+        }
+ });*/
 
 });
 

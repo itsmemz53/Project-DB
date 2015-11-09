@@ -1,7 +1,7 @@
 
 
 <div class="row back-color">
-	<div class="row row-center" ng-app="dropped">
+	<div class="row row-center" >
 		<form class="col" role="form" ng-submit="login(authorizationForm)" name="authorizationForm" novalidate="">
 			<label class="item item-input" ng-class="{ 'has-errors' : authorizationForm.username.$invalid && authorizationForm.$submitted, 'no-errors' : authorizationForm.username.$valid}">
 				<input type="text" name="username" ng-model="username" placeholder="Username" ng-minlength="5" ng-maxlength="20" required>

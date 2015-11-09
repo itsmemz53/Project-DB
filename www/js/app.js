@@ -52,6 +52,13 @@ app.run(function($ionicPlatform) {
 
 
         });
+         $stateProvider.state('shopProfile', {
+            url: '/shopProfile',
+            templateUrl: '/partials/shopProfile.html',
+            controller: "shopProfile"
+
+
+        });
          
         $urlRouterProvider.otherwise('/');
 

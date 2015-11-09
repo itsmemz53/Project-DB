@@ -249,7 +249,7 @@ for(var i=0;i<keyWords.length;i++){
         
              var request = {
             location: pos,
-            radius: 1000,
+            radius: 2500,
             types: ['restaurant']
             };
            ind=null;
@@ -382,4 +382,50 @@ $scope.mapItem=true;
 google.maps.event.addDomListener(window, 'load', initialize);
 
   
+}]).controller('shopProfile', ['$scope', 'myService','$location', function ($scope, myService,$location) {            
+  $scope.SendShop=function(){
+    /* $scope.roles = [
+    'guest', 
+    'user', 
+    'customer', 
+    'admin'
+  ];
+  $scope.user = {
+    roles: ['user']
+  };
+  $scope.getRoles = function() {
+    return $scope.user.roles;
+  };
+  $scope.check = function(value, checked) {
+    var idx = $scope.user.roles.indexOf(value);
+    if (idx >= 0 && !checked) {
+      $scope.user.roles.splice(idx, 1);
+    }
+    if (idx < 0 && checked) {
+      $scope.user.roles.push(value);
+    }
+  };*/
+
+
+ var j=0
+var cat=[ 'guest', 
+    'user', 
+    'customer', 
+    'admin'];
+    for(var i=0;i<cat.length;i++){
+ var obj={shopName:'AhmedMart',shopAddr:'asdasd', shopArea:'asdasd',shopLong:'24.24555453', shopLat:'68.2596226' ,category:cat[i]};
+ 
+  /*var obj={shopName:$scope.shopName,shopAddr:$scope.shopAddr, shopArea:$scope.shopArea,shopLong:$scope.shopLong, shopLat:$scope.shoplat}*/
+      myService.sendShop(obj).success(function(res){
+        if (res == true) {
+              j=1;
+            }
+            else  {
+               j=0;
+            }
+        });
+    } 
+    $location.path('shopProfile');  
+  }
+
 }]);
