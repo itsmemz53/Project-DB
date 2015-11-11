@@ -174,6 +174,46 @@ angular.module('dbProject.controllers', [])
             
 
     });
+}]).controller('shopProfile', ['$scope', 'myService','$location','$rootScope', function ($scope, myService,$location,$rootScope) {   
+         $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
+         babyProducts: false, Cosmetics: false,
+       Crockeries: false, eyeWear: false,
+       gentGarments: false, handBag_purse_keyChain: false,
+       kidGarments: false, ladiesGarments: false,
+       ladiesUnderGarments: false, mobileCards: false,Perfume: false, petFood: false,sportsWear: false, Tobacco: false,
+       Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
+var cat=[];
+
+ $rootScope.location = $location.path();
+  $scope.SendShop=function(){
+
+
+ var j=0
+ for(var d in $scope.colors){
+  if($scope.colors[d] == true)
+  {
+
+    cat.push(d);
+    
+  }
+ }
+         for(var as=0;as<cat.length;as++){
+ var obj={shopName:'AhmedMart',shopAddr:'asdasd', shopArea:'asdasd',shopLong:'24.24555453', shopLat:'68.2596226' ,category:cat[as] };
+
+ // var obj={shopName:$scope.shopName,shopAddr:$scope.shopAddr, shopArea:$scope.shopArea,shopLong:$scope.shopLong, shopLat:$scope.shoplat, category:cat[as]}
+      myService.sendShop(obj).success(function(res){
+        if (res == true) {
+              console.log("submitted");
+            }
+            else  {
+              console.log("wrong");
+            }
+        });
+    } 
+     
+  
+
+}
 }]).controller('Main', ['$scope', 'myService','$location', function ($scope, myService,$location) {            
 
     
@@ -382,50 +422,4 @@ $scope.mapItem=true;
 google.maps.event.addDomListener(window, 'load', initialize);
 
   
-}]).controller('shopProfile', ['$scope', 'myService','$location', function ($scope, myService,$location) {            
-  $scope.SendShop=function(){
-    /* $scope.roles = [
-    'guest', 
-    'user', 
-    'customer', 
-    'admin'
-  ];
-  $scope.user = {
-    roles: ['user']
-  };
-  $scope.getRoles = function() {
-    return $scope.user.roles;
-  };
-  $scope.check = function(value, checked) {
-    var idx = $scope.user.roles.indexOf(value);
-    if (idx >= 0 && !checked) {
-      $scope.user.roles.splice(idx, 1);
-    }
-    if (idx < 0 && checked) {
-      $scope.user.roles.push(value);
-    }
-  };*/
-
-
- var j=0
-var cat=[ 'guest', 
-    'user', 
-    'customer', 
-    'admin'];
-    for(var i=0;i<cat.length;i++){
- var obj={shopName:'AhmedMart',shopAddr:'asdasd', shopArea:'asdasd',shopLong:'24.24555453', shopLat:'68.2596226' ,category:cat[i]};
- 
-  /*var obj={shopName:$scope.shopName,shopAddr:$scope.shopAddr, shopArea:$scope.shopArea,shopLong:$scope.shopLong, shopLat:$scope.shoplat}*/
-      myService.sendShop(obj).success(function(res){
-        if (res == true) {
-              j=1;
-            }
-            else  {
-               j=0;
-            }
-        });
-    } 
-    $location.path('shopProfile');  
-  }
-
 }]);

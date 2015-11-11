@@ -173,14 +173,15 @@ var FreshObj={shopName:req.body.shopName,shopAddr:req.body.shopAddr, shopArea:re
 var obj={};
     
     var dum=req.body.category;
-
+    console.log(dum);
   collection.findOne({category: dum}, {}, function (e, docs2) {
     if(docs2){
-       collection.remove({});
-        console.log("Ye purana hai",docs2.Shops);
+       collection.remove({category : dum});
+       console.log("remove ker k if me aya");
+       // console.log("Ye purana hai",docs2.Shops);
   
        
-        console.log("Ye naya hai ", FreshObj);
+      //  console.log("Ye naya hai ", FreshObj);
         var Comp={};
         array=null;
         array=[];
@@ -188,7 +189,7 @@ var obj={};
  for(var z in docs2.Shops){
     co++;
  }
- console.log(co);
+// console.log(co);
         for(var k=0;k<co;k++){
             if(docs2.Shops[k]!=null){
              array.push(docs2.Shops[k]);
@@ -198,24 +199,26 @@ var obj={};
         
           
            array.push(FreshObj);
-           console.log(array.length)
+         //  console.log(array.length)
            for(var l=0 ;l<array.length;l++){
             Comp[l]=array[l];
            }
            obj={category : dum, Shops:Comp};
-               
+               console.log("ab yaha finally insert karega is cat me ",dum);
  collection.insert(obj, function (err, doc) {
                        
                         if (err) {
                             // If it failed, return error
-                            res.send(false);
+                            //res.send(false);
                         }
                         else {
-                            res.send(true);
+                            //res.send(true);
                         }
                     });
+ res.send(true);
     }
 else{
+    console.log("Ye yaha new category bana ker insert karega",dum);
            var dummy={'0':FreshObj};
      obj={category : dum, Shops:dummy};
  collection.insert(obj, function (err, doc) {

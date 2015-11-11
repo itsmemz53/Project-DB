@@ -1,56 +1,39 @@
-<div class='row'>
-	<div class='row row-center'>
-		<formclass="col" role="form"  name="shopForm">
-			<label class="item item-input">
-				<input type="text" name="shopName" ng-model="shopName" placeholder="ShopName" required>
+ <ion-pane >
+ <ion-content >
+
+	<div class="row row-center">
+		<form class="col" role="form"  name="shopForm">
+			<label class="item item-input item-floating-label">
+				<input type="text" ng-model="shopName" name="shopName" placeholder="ShopName" >
 			</label>
-			<label class="item item-input">
-				<input type="text" name="shopArea" ng-model="shopArea" placeholder="Area" >
+			<label class="item item-input item-floating-label">
+				<input type="text" ng-model="shopArea" placeholder="Area">
 			</label>
-			<label class="item item-input">
-				<input type="text" name="shopAddr" ng-model="shopAddr" placeholder="Address" >
+			<label class="item item-input item-floating-label">
+				<input type="text" name="shopAddr" ng-model="shopAddr" placeholder="Address">
 			</label>
 
-			<label class="item item-input">
-				<input type="text" name="shopLong" ng-model="shopLong" placeholder="Longitude" required>
+			<label class="item item-input item-floating-label">
+				<input type="text" name="shopLong" ng-model="shopLong" placeholder="Longitude" >
 			</label>
-			<label class="item item-input">
-				<input type="text" name="shopLat" ng-model="shopLat" placeholder="Latitude" required>
+			<label class="item item-input item-floating-label">
+				<input type="text" name="shopLat" ng-model="shopLat" placeholder="Latitude" >
 			</label>
-			<label ng-repeat="role in roles">
-  <input type="checkbox" checklist-model="getRoles()" checklist-value="role" ng-change="check(role, checked)"> {{role}}
-</label>
-				<!-- <input type="checkbox" name="artificialJewelery" value="artificialJewelery" ng-model="artificialJewelery">Artificial Jewelery<br>
-				<input type="checkbox" name="Accessories" value="Accessories" ng-model="Accessories">Accessories
-				<input type="checkbox" name="Electronics" value="Electronics" ng-model="Electronics">Electronics<br>
-				<input type="checkbox" name="bedSheetNTowel" value="bedSheetNTowel" ng-model="bedSheetNTowel">BedSheet And Towel
-								<input type="checkbox" name="babyProducts" value="babyProducts" ng-model="babyProducts">Baby Products<br>
-				<input type="checkbox" name="Cosmetics" value="Cosmetics" ng-model="Cosmetics">Cosmetics 
-								<input type="checkbox" name="Crockeries" value="Crockeries" ng-model="Crockeries">Crockeries<br>
-				<input type="checkbox" name="eyeWear" value="eyeWear" ng-model="eyeWear">Eye Wear
-								<input type="checkbox" name="gentGarments" value="gentGarments" ng-model="gentGarments">Gents Garments<br>
-				<input type="checkbox" name="handBag_Purse_keyChain" value="handBag_Purse_keyChain" ng-model="handBag_Purse_keyChain">HandBag Purse KeyChain
-								<input type="checkbox" name="kidGarments" value="kidGarments" ng-model="kidGarments">Kids Garments<br>
-				<input type="checkbox" name="ladiesGarments" value="ladiesGarments" ng-model="ladiesGarments">Ladies Garments 
-								<input type="checkbox" name="ladiesUnderGarments" value="ladiesUnderGarments" ng-model="ladiesUnderGarments">Ladies Under Garments<br>
-				<input type="checkbox" name="mobileCards" value="mobileCards" ng-model="mobileCards">Mobile Cards
-								<input type="checkbox" name="Perfumes" value="Perfumes" ng-model="Perfumes">Perfumes<br>
-				<input type="checkbox" name="petFood" value="petFood" ng-model="petFood">Pet Foods 
-								<input type="checkbox" name="sportsWear" value="sportsWear" ng-model="sportsWear">Sports Wear<br>
-				<input type="checkbox" name="Tobacco" value="Tobacco" ng-model="Tobacco">Tobacco 
-								<input type="checkbox" name="Watches" value="Watches" ng-model="Watches">Watches<br>
-				<input type="checkbox" name="gentShoes" value="gentShoes" ng-model="gentShoes">Gent Shoes 
-								<input type="checkbox" name="ladiesShoes" value="ladiesShoes" ng-model="ladiesShoes">Ladies Shoes<br>
-				<input type="checkbox" name="Groceries" value="Groceries" ng-model="Groceries">Groceries
-				<input type="checkbox" name="Toys_PartyItems_Balls_Stationary" value="Toys_PartyItems_Balls_Stationary" ng-model="Toys_PartyItems_Balls_Stationary">Toys Party Items Balls Stationary<br> -->
-			
+				<label class="item item-floating-label">Categories:</label>
+			   <label class="item" ng-repeat="(color,enabled) in colors">
+			   	<ion-checkbox ng-model="colors[color]">{{color}}</ion-checkbox>
+       
+    </label>
 				<button class="button button-full button-calm" type="submit" ng-click="SendShop()">
 				Submit
 			</button>
 
 		</form>
-	</div>
+
 
 
 
 </div>
+
+   </ion-content>
+</ion-pane>
