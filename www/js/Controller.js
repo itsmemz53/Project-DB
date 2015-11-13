@@ -174,7 +174,7 @@ angular.module('dbProject.controllers', [])
             
 
     });
-}]).controller('shopProfile', ['$scope', 'myService','$location','$rootScope', function ($scope, myService,$location,$rootScope) {   
+}]).controller('shopProfile', ['$scope', 'myService','$location', function ($scope, myService,$location) {   
          $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
          babyProducts: false, Cosmetics: false,
        Crockeries: false, eyeWear: false,
@@ -183,10 +183,21 @@ angular.module('dbProject.controllers', [])
        ladiesUnderGarments: false, mobileCards: false,Perfume: false, petFood: false,sportsWear: false, Tobacco: false,
        Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
 var cat=[];
+ $scope.stepsModel = [];
 
- $rootScope.location = $location.path();
+    $scope.imageUpload = function(element){
+        var reader = new FileReader();
+        reader.onload = $scope.imageIsLoaded;
+        reader.readAsDataURL(element.files[0]);
+
+    }
+
+    $scope.imageIsLoaded = function(e){
+        $scope.$apply(function() {
+            $scope.stepsModel.push(e.target.result);
+        });
+    }
   $scope.SendShop=function(){
-
 
  var j=0
  for(var d in $scope.colors){
@@ -197,10 +208,11 @@ var cat=[];
     
   }
  }
-         for(var as=0;as<cat.length;as++){
- var obj={shopName:'AhmedMart',shopAddr:'asdasd', shopArea:'asdasd',shopLong:'24.24555453', shopLat:'68.2596226' ,category:cat[as] };
 
- // var obj={shopName:$scope.shopName,shopAddr:$scope.shopAddr, shopArea:$scope.shopArea,shopLong:$scope.shopLong, shopLat:$scope.shoplat, category:cat[as]}
+
+
+         for(var as=0;as<cat.length;as++){
+  var obj={shopName:$scope.shopName,shopAddr:$scope.shopAddr, shopArea:$scope.shopArea,shopLong:$scope.shopLong, shopLat:$scope.shopLat, category:cat[as], shopCover:$scope.stepsModel[0]};
       myService.sendShop(obj).success(function(res){
         if (res == true) {
               console.log("submitted");
@@ -210,12 +222,28 @@ var cat=[];
             }
         });
     } 
-     
-  
+    $scope.shopName='';
+    $scope.shopAddr='';
+    $scope.shopArea='';
+    $scope.shopLong='';
+    $scope.shopLat='';
+    $scope.stepsModel[0]='';
+    $scope.imageIsLoaded='';
+ $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
+         babyProducts: false, Cosmetics: false,
+       Crockeries: false, eyeWear: false,
+       gentGarments: false, handBag_purse_keyChain: false,
+       kidGarments: false, ladiesGarments: false,
+       ladiesUnderGarments: false, mobileCards: false,Perfume: false, petFood: false,sportsWear: false, Tobacco: false,
+       Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
 
 }
 }]).controller('Main', ['$scope', 'myService','$location', function ($scope, myService,$location) {            
 
+  $scope.sendPic=function(){
+    console.log($scope.shopAddr);
+    console.log($scope.pic);
+  }
     
 }]).controller('Maps', ['$scope', 'myService','$location', function ($scope, myService,$location) {
   var map;

@@ -9,7 +9,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var db = require('monk')('f9:admin@ds035553.mongolab.com:35553/db-project');
 var categories = ['']
-
+var fs = require("fs");
 function findByUsername(username, fn) {
     var collection = db.get('loginUsers');
     console.log("yeh user name hai latest!!", username);
@@ -169,7 +169,7 @@ app.post('/shopProfile',function(req,res){
 
 
 var collection = db.get("shopProfile");
-var FreshObj={shopName:req.body.shopName,shopAddr:req.body.shopAddr, shopArea:req.body.shopArea,shopLong:req.body.shopLong, shopLat:req.body.shopLat};
+var FreshObj={shopName:req.body.shopName,shopAddr:req.body.shopAddr, shopArea:req.body.shopArea,shopLong:req.body.shopLong, shopLat:req.body.shopLat ,shopCover : req.body.shopCover};
 var obj={};
     
     var dum=req.body.category;

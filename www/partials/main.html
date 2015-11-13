@@ -12,7 +12,16 @@
 			<div class="col">
 				<a class="button button-full button-calm" ng-href="/#/login"> Login</a>
 				<a class="button button-full button-assertive" ng-href="/#/home">Or Continue</a>
- 
+ 				<form>
+ 						<label class="item item-input item-floating-label">
+				<input type="text" name="shopAddr" ng-model="shopAddr" placeholder="Address">
+			</label>
+ 					<label class="item item-file">
+    	  <input type="file" name="pic" ng-model="pic" accept="image/*"></label>
+    	  <button class="button button-full button-calm" type="submit" ng-click="sendPic()">
+				Submit
+			</button>
+ 				</form>
 			</div>
 			</div>
 		
