@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var db = require('monk')('f9:admin@ds035553.mongolab.com:35553/db-project');
-var categories = ['']
+var categories = [''];
+var S = require('string');
 var fs = require("fs");
 function findByUsername(username, fn) {
     var collection = db.get('loginUsers');
@@ -164,6 +165,105 @@ app.post('/register', function (req, res) {
     // Submit to the DB
 
 });
+
+
+
+
+app.post('/searchIt', function (req, res) {
+    var collection =db.get('ProductItems');
+    var categ=req.body.category;
+    var search=req.body.search;
+    var flag=0;
+    console.log("Haan bhai Yaha aGaaya");
+     collection.findOne({categoryName: categ}, {}, function (e, docs2) {
+        if(docs2){
+            console.log("Haan bhai search kerlia ab");
+            var co=0;
+            for(var z in docs2.items){
+    co++;
+         }
+         for(var k=0;k<co;k++){
+            if(docs2.items[k]!=null){
+
+                var str=S(docs2.items[k].item_name).collapseWhitespace().s;
+                console.log(str);
+                console.log(S(str).contains(search));
+                if(S(str).contains(search)){
+                    flag=1;
+                    k=co+1
+                }
+         }
+            
+         }
+         
+        }
+        else{
+            console.log("Not found");
+        }
+        if(flag==1){
+            console.log("Haan bhai item mil gaya");
+            res.send(true);
+         }
+         else{
+            res.send(false);
+         }
+     });
+});
+
+
+var distance = 500 / 6371;
+app.post('/getShop', function (req, res) {
+
+    var collection =db.get('shopProfile');
+    collection.ensureIndex({point:"2dsphere"});
+      /*collection.geoNear(24.885738, 67.074577, {$maxDistance:10,includeLocs: true }, function(err, result) {
+    if(err){
+        console.log('error');
+    }
+    else{
+        console.log(result);
+    }
+  });*/
+//       collection.find([{$geoNear: {near: { type: "Point", coordinates: [ 24.885738 , 67.074577 ] },distanceField: "dist.calculated", maxDistance: 10,
+//         query: { type: "public" },
+//         includeLocs: true,
+//         num: 50,
+//         spherical: true
+//      }
+//    }
+// ],function(err,result){
+// if(err)console.log(err);
+// else console.log(result);
+
+// })
+
+       collection.find({location: {$near: {
+            $geometry : {
+               type : "Point" ,
+               coordinates : [24.885738 , 67.074577] },
+            $maxDistance : 10
+          }}},function(err, docs) {
+    if(err)  console.log(err);
+    else
+        console.log(docs);
+});
+  /*  collection.find({ location:{ $geoWithin:{ $centerSphere: [ [ 24.885738, 67.074577 ], 5 / 3963.2 ] } } }).toArray(function(e,docs2){
+        if(docs2){
+           // console.log(docs2);
+            res.send(true);
+        }
+        else{
+            console.log("Not found result");
+            res.send(false);
+
+        }
+
+      });*/
+    
+});
+
+
+
 app.post('/shopProfile',function(req,res){
 
 
@@ -280,6 +380,9 @@ app.get('/logout', function (req, res) {
     res.send(true);
 
 });
+
+
+
 app.get('/isAuthenticated', function (req, res) {
     if (req.isAuthenticated())
         res.send(true);

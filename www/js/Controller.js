@@ -251,12 +251,60 @@ var infowindow;
 var pos;
 var slat;
 var slong;
+     $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
+         babyProducts: false, Cosmetics: false,
+       Crockeries: false, eyeWear: false,
+       gentGarments: false, handBag_purse_keyChain: false,
+       kidGarments: false, ladiesGarments: false,
+       ladiesUnderGarments: false, mobileCards: false,Perfume: false, petFood: false,sportsWear: false, Tobacco: false,
+       Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
+var cat=[];
+
 $scope.mapItem=false;
 myService.sendProducts().success(function(res){
   if(res==true){
     console.log("done");
   }
 });
+
+$scope.searchThis=function(){
+  console.log($scope.store);
+
+
+  var j=0
+ for(var d in $scope.colors){
+  if($scope.colors[d] == true)
+  {
+
+    cat.push(d);
+    
+  }
+ }
+         for(var as=0;as<cat.length;as++){
+  var myObj={search:$scope.store , category : cat[as]}
+  var asd={as:"hello"};
+       myService.sendSearch(myObj).success(function(res){
+  if(res==true){
+    console.log("itemFound");
+    as=cat.length+1;
+    myService.getShop(asd).success(function(res){
+
+        console.log(res);
+
+
+    });
+       }
+       else{
+        console.log("NotFound");
+       }
+
+
+      });
+    } 
+
+
+}
+
 function initialize() {
   var pyrmont;
   var mapOptions = {

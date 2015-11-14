@@ -19,6 +19,24 @@ angular.module('dbProject.services',[])
             };
             return $http(req);
         }
+         ergastAPI.sendSearch = function (userObj) {
+            var req = {
+                method: 'POST',
+                url: '/searchIt',
+                data: userObj
+                
+            };
+            return $http(req);
+        }
+        ergastAPI.getShop = function (userObj) {
+            var req = {
+                method: 'POST',
+                url: '/getShop',
+                data: userObj
+                
+            };
+            return $http(req);
+        }
        
          ergastAPI.sendShop = function (userObj) {
             var req = {
