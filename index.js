@@ -11,6 +11,7 @@ var db = require('monk')('f9:admin@ds035553.mongolab.com:35553/db-project');
 var categories = [''];
 var S = require('string');
 var fs = require("fs");
+var geolib=require("geolib");
 function findByUsername(username, fn) {
     var collection = db.get('loginUsers');
     console.log("yeh user name hai latest!!", username);
@@ -211,54 +212,49 @@ app.post('/searchIt', function (req, res) {
 });
 
 
-var distance = 500 / 6371;
 app.post('/getShop', function (req, res) {
+    var cou=0;
+    var aray=[];
+var collect=req.body.category+'_Shops';
+    var collection =db.get(collect);
+    collection.find({},function(err,docs){
+        if(docs){
+            for(var i in docs){
+                cou++;
+            }
+            for(var j=0; j<cou;j++){
+                var lat=docs[j].coordinates[1];
+                var lon= docs[j].coordinates[0];
+                var slat=req.body.lat;
+                var slon=req.body.lon;
+        var ans=geolib.isPointInCircle(
+                {latitude: lat , longitude: lon},
+                {latitude: slat, longitude: slon},
+                500
+                );
 
-    var collection =db.get('shopProfile');
-    collection.ensureIndex({point:"2dsphere"});
-      /*collection.geoNear(24.885738, 67.074577, {$maxDistance:10,includeLocs: true }, function(err, result) {
-    if(err){
-        console.log('error');
-    }
-    else{
-        console.log(result);
-    }
-  });*/
-//       collection.find([{$geoNear: {near: { type: "Point", coordinates: [ 24.885738 , 67.074577 ] },distanceField: "dist.calculated", maxDistance: 10,
-//         query: { type: "public" },
-//         includeLocs: true,
-//         num: 50,
-//         spherical: true
-//      }
-//    }
-// ],function(err,result){
-// if(err)console.log(err);
-// else console.log(result);
+                if(ans==true){
+                    var objec={shopLong : docs[j].coordinates[0], shopLat :docs[j].coordinates[1], shopName: docs[j].shopName, shopAddr : docs[j].shopAddr, shopArea: docs[j].shopArea, shopCover:docs[j].shopCover  };
+                    aray.push(objec);
+                    console.log(j ,"   ",objec);
+                }
 
-// })
+            }
+           res.send(aray);
 
-       collection.find({location: {$near: {
-            $geometry : {
-               type : "Point" ,
-               coordinates : [24.885738 , 67.074577] },
-            $maxDistance : 10
-          }}},function(err, docs) {
-    if(err)  console.log(err);
-    else
-        console.log(docs);
-});
-  /*  collection.find({ location:{ $geoWithin:{ $centerSphere: [ [ 24.885738, 67.074577 ], 5 / 3963.2 ] } } }).toArray(function(e,docs2){
-        if(docs2){
-           // console.log(docs2);
-            res.send(true);
+
+
         }
         else{
-            console.log("Not found result");
+            console.log(err);
             res.send(false);
-
         }
 
-      });*/
+
+
+    });
+
+
     
 });
 
@@ -266,74 +262,23 @@ app.post('/getShop', function (req, res) {
 
 app.post('/shopProfile',function(req,res){
 
+var collect=req.body.category+'_Shops';
+
+var collection = db.get(collect);
+var FreshObj={coordinates:[req.body.shopLong,req.body.shopLat],shopName:req.body.shopName,shopAddr:req.body.shopAddr, shopArea:req.body.shopArea, shopCover : req.body.shopCover};
+
+/*collection.index({"location.coordinates":"2dsphere"}, { sparse: true }, function(err, result) {
+        if(err)console.log(err);
+        else console.log("done");
+
+    })*/
+collection.insert(FreshObj,function(e,docs){
+    if(e)res.send(false);
+    else res.send(true);
 
 
-var collection = db.get("shopProfile");
-var FreshObj={shopName:req.body.shopName,shopAddr:req.body.shopAddr, shopArea:req.body.shopArea,shopLong:req.body.shopLong, shopLat:req.body.shopLat ,shopCover : req.body.shopCover};
-var obj={};
-    
-    var dum=req.body.category;
-    console.log(dum);
-  collection.findOne({category: dum}, {}, function (e, docs2) {
-    if(docs2){
-       collection.remove({category : dum});
-       console.log("remove ker k if me aya");
-       // console.log("Ye purana hai",docs2.Shops);
-  
-       
-      //  console.log("Ye naya hai ", FreshObj);
-        var Comp={};
-        array=null;
-        array=[];
-        var co=0;
- for(var z in docs2.Shops){
-    co++;
- }
-// console.log(co);
-        for(var k=0;k<co;k++){
-            if(docs2.Shops[k]!=null){
-             array.push(docs2.Shops[k]);
-         }
-            
-         }
-        
-          
-           array.push(FreshObj);
-         //  console.log(array.length)
-           for(var l=0 ;l<array.length;l++){
-            Comp[l]=array[l];
-           }
-           obj={category : dum, Shops:Comp};
-               console.log("ab yaha finally insert karega is cat me ",dum);
- collection.insert(obj, function (err, doc) {
-                       
-                        if (err) {
-                            // If it failed, return error
-                            //res.send(false);
-                        }
-                        else {
-                            //res.send(true);
-                        }
-                    });
- res.send(true);
-    }
-else{
-    console.log("Ye yaha new category bana ker insert karega",dum);
-           var dummy={'0':FreshObj};
-     obj={category : dum, Shops:dummy};
- collection.insert(obj, function (err, doc) {
-                       
-                        if (err) {
-                            // If it failed, return error
-                            res.send(false);
-                        }
-                        else {
-                            res.send(true);
-                        }
-                    });
-
-}
 });
+
 
 });
 
@@ -422,3 +367,132 @@ function hash(password, salt) {
 exports.GetUser=function(){
     return MatchUser;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      /*collection.geoNear(24.885738, 67.074577, {$maxDistance:10,includeLocs: true }, function(err, result) {
+    if(err){
+        console.log('error');
+    }
+    else{
+        console.log(result);
+    }
+  });*/
+     /* collection.find({coordinates : {$geoNear: {$geometry :{  coordinates: [ 24.885738 , 67.074577 ], type: "Point"},distanceField: "dist.calculated", maxDistance: 100,
+        query: { type: "public" },
+        includeLocs: true,
+        num: 50,
+        spherical: true
+     }
+   
+}},function(err,result){
+if(err)console.log(err);
+else console.log(result);
+
+});*/
+
+   /*ar as= collection.find({ coordinates: { $nearSphere: { $geometry: { coordinates: [ 67.074577 , 24.885738] ,type: "Point" }, $maxDistance: 5 * 1609.34 } } },function(err,result){
+if(err)console.log(err);
+else console.log(result);
+
+
+});*/
+
+
+ /*  console.log(das);*/
+
+/* collection.findOne({ geometry: { $geoIntersects: { $geometry: { coordinates:  [24.937691 , 67.033492], type: "Point"  } } } },function(err,result){
+if(err)console.log(err);
+else console.log(result);
+
+
+});*/
+
+    /*   collection.find({location:
+   { $geoWithin:
+      { $centerSphere: [ [ 24.937691,  67.033492 ], 5 / 3963.2 ] } } },function(err, docs) {
+    if(err)  console.log(err);
+    else
+        console.log("Returned",docs);
+});
+*/
+
+      /*  collection.find({ coordinates: {$near: {
+     $geometry: {
+        type: "Point" ,
+        coordinates: [24.937691 , 67.033492] 
+     },
+     $maxDistance: 1000,
+     includeLocs: true
+  }}},function(err, docs) {
+    if(err)  console.log(err);
+    else
+        console.log("Returned",docs);
+});
+*/
+
+   /* collection.find({coordinates:{ $geoWithin:{ $centerSphere: [ [24.937691 , 67.033492] , 500 / 3963.2 ] } } },function(e,docs2){
+        if(docs2){
+           console.log(docs2);
+            res.send(docs2);
+        }
+        else{
+            console.log("Not found result");
+            res.send(false);
+
+        }
+
+      });
+*/
+
+
+
+
+
+
+
+
+
+
+

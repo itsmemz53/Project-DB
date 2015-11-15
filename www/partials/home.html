@@ -30,9 +30,12 @@
                 <div id="results"  class="panel" ng-show="Results">
 
               <h2>Results</h2>
-              <div ng-repeat="place in places">
-              {{place.name}}
-            </div>
+              
+                 <label for="name2b" class="item item-input item-stacked-label" ng-repeat="place in places" >
+                  {{place.shopName}}
+                      </label>
+             
+           
              
         </div>
            </ion-scroll>

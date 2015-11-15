@@ -249,8 +249,8 @@ var cat=[];
   var map;
 var infowindow;
 var pos;
-var slat;
-var slong;
+var slat=null;
+var slong=null;
      $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
          babyProducts: false, Cosmetics: false,
        Crockeries: false, eyeWear: false,
@@ -259,7 +259,7 @@ var slong;
        ladiesUnderGarments: false, mobileCards: false,Perfume: false, petFood: false,sportsWear: false, Tobacco: false,
        Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
 var cat=[];
-
+var searchResult=[];
 $scope.mapItem=false;
 myService.sendProducts().success(function(res){
   if(res==true){
@@ -270,7 +270,10 @@ myService.sendProducts().success(function(res){
 $scope.searchThis=function(){
   console.log($scope.store);
 
-
+if(slat==null){
+  alert("Please try Get Location");
+}
+else{
   var j=0
  for(var d in $scope.colors){
   if($scope.colors[d] == true)
@@ -281,20 +284,23 @@ $scope.searchThis=function(){
   }
  }
          for(var as=0;as<cat.length;as++){
-  var myObj={search:$scope.store , category : cat[as]}
-  var asd={as:"hello"};
+  var myObj={search:$scope.store , category : cat[as], lat:slat, lon:slong};
+
        myService.sendSearch(myObj).success(function(res){
   if(res==true){
     console.log("itemFound");
-    as=cat.length+1;
-    myService.getShop(asd).success(function(res){
-
-        console.log(res);
-
-
+    myService.getShop(myObj).success(function(res){
+      $scope.Results=true;
+      $scope.mapItem=false;
+        console.log(res[0].shopName);
+        res=searchResult;
+        $scope.places=res;
+      as=cat.length+1;
+    
     });
        }
        else{
+
         console.log("NotFound");
        }
 
@@ -302,7 +308,7 @@ $scope.searchThis=function(){
       });
     } 
 
-
+}
 }
 
 function initialize() {
