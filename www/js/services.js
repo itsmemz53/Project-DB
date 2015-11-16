@@ -47,7 +47,14 @@ angular.module('dbProject.services',[])
             };
             return $http(req);
         }
-       
+       ergastAPI.getShopsWithId = function (id) {
+            //console.log("yeh id hai!",id);
+            return $http({
+                method: 'GET',
+                url: '/getShop/' + id
+            });
+        }
+
          ergastAPI.logout = function () {
             var req = {
                 method: 'GET',

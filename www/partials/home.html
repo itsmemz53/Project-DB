@@ -9,19 +9,21 @@
                     <input type="text" id="current" ng-model="from" class="from" name="from" placeHolder="Please Enter Location" required="required" data-clear-btn="true">
 
                       </label>
+                      <div ng-show="categoriesMap">
 <ion-scroll zooming="true" direction="y" style=" height: 300px">
-         <label class="item" ng-repeat="(color,enabled) in colors">
+         <label class="item" ng-repeat="(color,enabled) in colors" >
           <ion-checkbox ng-model="colors[color]">{{color}}</ion-checkbox>
        
     </label>
    </ion-scroll>
-   <ion-scroll zooming="true" direction="y" style="height: 400px">
-                       <button type="submit" ng-click="fromLink(store)" class="button button-small button-block button-royal" data-inline="true" ><i class='ion-location' style="font-size:20px">&nbsp</i>Get Location</button>
+ </div>
+   <ion-scroll zooming="true" direction="y" style="height: 500px">
+                       <button type="submit" ng-click="fromLink(store)" class="button button-small button-royal" data-inline="true" ><i class='ion-location' style="font-size:20px">&nbsp</i>Get Location</button>
                     
-                        <button type="submit" ng-click="searchLink(store)" class="button button-full button-calm" data-inline="true" ><i class='ion-search' style="font-size:35px">&nbsp</i>Search Location</button>
+                        <button type="submit" ng-click="searchLink(store)" class="button  button-calm" data-inline="true" ><i class='ion-search' style="font-size:35px">&nbsp</i>Search Location</button>
                         
                     
-                        <button type="submit" id="button2" ng-click="searchThis()" data-inline="true" class="button button-full button-balanced" ><i class='ion-ios-search-strong' style="font-size:35px">&nbsp</i>Search Nearby</button>
+                        <button type="submit" id="button2" ng-click="searchThis()" data-inline="true" class="button  button-balanced" ><i class='ion-ios-search-strong' style="font-size:35px">&nbsp</i>Search Nearby</button>
                   
             
           
@@ -30,12 +32,22 @@
                 <div id="results"  class="panel" ng-show="Results">
 
               <h2>Results</h2>
-              
-                 <label for="name2b" class="item item-input item-stacked-label" ng-repeat="place in places" >
-                  {{place.shopName}}
-                      </label>
-             
-           
+              <div class="list">
+      <div ng-repeat="place in places" >
+        <a class="item item-avatar" ng-href='/#/details/{{place._id}}'>
+          <img class="product-thumbnail" ng-src={{place.cover}}>
+         <h2 style="font-size:22px">{{place.name}}</h2>
+         <p>{{place.area}}</p>
+
+
+          <div>
+
+          </div>
+        </a>
+
+      </div>
+
+    </div>
              
         </div>
            </ion-scroll>

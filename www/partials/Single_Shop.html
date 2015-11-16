@@ -1,0 +1,29 @@
+	<ion-content >
+
+		<div class="list card item-center   " >
+
+			<div class="item  ">
+
+
+				<h1>{{product.shopName}}</h1>
+
+			</div>
+
+
+			<div class="item item-body  ">
+				<img class="" ng-src={{product.shopCover}}>
+
+			</div>
+
+			<div class="item  tabs-secondary tabs-icon-left">
+				<p>{{product.shopArea}}</p>
+				<p>{{product.shopAddr}}</p>
+				<button class="button button-large button-block button-royal" style="font-size:20px" ng-click="SendDetails(product)">
+					<i class="ion-eye" style="font-size:35px">&nbsp</i>Add A Review
+				</button>
+
+			</div>
+
+		</div>
+
+	</ion-content>

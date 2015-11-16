@@ -210,12 +210,13 @@ app.post('/searchIt', function (req, res) {
          }
      });
 });
-
+var shop;
 
 app.post('/getShop', function (req, res) {
     var cou=0;
     var aray=[];
 var collect=req.body.category+'_Shops';
+shop=collect;
     var collection =db.get(collect);
     collection.find({},function(err,docs){
         if(docs){
@@ -234,7 +235,7 @@ var collect=req.body.category+'_Shops';
                 );
 
                 if(ans==true){
-                    var objec={shopLong : docs[j].coordinates[0], shopLat :docs[j].coordinates[1], shopName: docs[j].shopName, shopAddr : docs[j].shopAddr, shopArea: docs[j].shopArea, shopCover:docs[j].shopCover  };
+                    var objec={_id:docs[j]._id, categoryName:req.body.category ,shopLong : docs[j].coordinates[0], shopLat :docs[j].coordinates[1], shopName: docs[j].shopName, shopAddr : docs[j].shopAddr, shopArea: docs[j].shopArea, shopCover:docs[j].shopCover  };
                     aray.push(objec);
                     console.log(j ,"   ",objec);
                 }
@@ -265,7 +266,7 @@ app.post('/shopProfile',function(req,res){
 var collect=req.body.category+'_Shops';
 
 var collection = db.get(collect);
-var FreshObj={coordinates:[req.body.shopLong,req.body.shopLat],shopName:req.body.shopName,shopAddr:req.body.shopAddr, shopArea:req.body.shopArea, shopCover : req.body.shopCover};
+var FreshObj={coordinates:[req.body.shopLong,req.body.shopLat],shopName:req.body.shopName,shopAddr:req.body.shopAddr, shopArea:req.body.shopArea, shopCover : req.body.shopCover };
 
 /*collection.index({"location.coordinates":"2dsphere"}, { sparse: true }, function(err, result) {
         if(err)console.log(err);
@@ -281,7 +282,17 @@ collection.insert(FreshObj,function(e,docs){
 
 
 });
+app.get('/getShop/*', function (req, res) {
+    var abc = req.params[0];
 
+    if (abc) {
+        console.log("yeh single hai",shop);
+        var obj = findProduct(res, req.params[0], shop);
+    }
+    else {
+        res.send({error: true})
+    }
+});
 app.post('/ProductItems',function(req,res){
     var collection= req.db.get("ProductItems");
     var obj=[
@@ -338,7 +349,22 @@ app.get('/isAuthenticated', function (req, res) {
 
 
 
+function findProduct(res, ind, collectionName) {
+    var collect = db.get(collectionName);
+    collect.findOne({_id: ind}, {}, function (e, docs) {
 
+        
+        console.log("Shop", docs);
+        if (docs) {
+            res.send(docs);
+        }
+        else {
+            return null;
+        }
+         });
+   
+
+}
 
 
 app.listen(app.get('port'), function () {

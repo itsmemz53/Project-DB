@@ -26,6 +26,12 @@ app.run(function($ionicPlatform) {
             controller: "loginUser"
 
         });
+            $stateProvider.state('details', {
+            url: '/details/:id',
+             cache:false,
+            templateUrl: '/partials/Single_Shop.html',
+            controller: 'getDetails'
+        });
         
         $stateProvider.state('register', {
             url: '/register',

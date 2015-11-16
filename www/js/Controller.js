@@ -238,6 +238,29 @@ var cat=[];
        Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
 
 }
+}]).controller('getDetails', ['$scope', 'myService', '$stateParams', '$location',function ($scope, myService, $stateParams,$location
+    ) {
+    $scope.id = $stateParams.id;
+    console.log($stateParams);
+   
+
+    $scope.SendDetails = function(Product){
+        console.log(Product);
+
+        
+
+    };
+
+   
+    myService.getShopsWithId($scope.id).success(function (res) {
+        $scope.product = res;
+        $scope.loader=true;
+
+        console.log($scope.product);
+
+
+    });
+
 }]).controller('Main', ['$scope', 'myService','$location', function ($scope, myService,$location) {            
 
   $scope.sendPic=function(){
@@ -251,6 +274,7 @@ var infowindow;
 var pos;
 var slat=null;
 var slong=null;
+$scope.categoriesMap=true;
      $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
          babyProducts: false, Cosmetics: false,
        Crockeries: false, eyeWear: false,
@@ -267,61 +291,17 @@ myService.sendProducts().success(function(res){
   }
 });
 
-$scope.searchThis=function(){
-  console.log($scope.store);
-
-if(slat==null){
-  alert("Please try Get Location");
-}
-else{
-  var j=0
- for(var d in $scope.colors){
-  if($scope.colors[d] == true)
-  {
-
-    cat.push(d);
-    
-  }
- }
-         for(var as=0;as<cat.length;as++){
-  var myObj={search:$scope.store , category : cat[as], lat:slat, lon:slong};
-
-       myService.sendSearch(myObj).success(function(res){
-  if(res==true){
-    console.log("itemFound");
-    myService.getShop(myObj).success(function(res){
-      $scope.Results=true;
-      $scope.mapItem=false;
-        console.log(res[0].shopName);
-        res=searchResult;
-        $scope.places=res;
-      as=cat.length+1;
-    
-    });
-       }
-       else{
-
-        console.log("NotFound");
-       }
-
-
-      });
-    } 
-
-}
-}
 
 function initialize() {
   var pyrmont;
   var mapOptions = {
-        zoom: 30,
+        zoom: 25,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-console.log(map);
+ map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
 var ind=null;
                  console.log("here")
-                 console.log(store);
+                // console.log(store);
 /*var Keyword=store.toLowerCase();
 for(var i=0;i<keyWords.length;i++){
     if(keyWords[i].search(Keyword)!= -1){
@@ -381,6 +361,83 @@ for(var i=0;i<keyWords.length;i++){
           service.nearbySearch(request, callback);
         })
 }
+$scope.searchThis=function(){
+  console.log($scope.store);
+
+if(slat==null){
+  alert("Please try Get Location");
+}
+else{
+  var j=0
+ for(var d in $scope.colors){
+  if($scope.colors[d] == true)
+  {
+
+    cat.push(d);
+    
+  }
+ }
+         for(var as=0;as<cat.length;as++){
+  var myObj={search:$scope.store , category : cat[as], lat:slat, lon:slong};
+  var shopname=[];
+  var shoparea=[];
+  var shopcover=[];
+  var shopcategory=[];
+  var shopid=[];
+       myService.sendSearch(myObj).success(function(res){
+  if(res==true){
+    console.log("itemFound");
+    myService.getShop(myObj).success(function(res){
+      $scope.Results=true;
+      $scope.mapItem=false;
+      for(var i in res){
+        shopname.push(res[i].shopName);
+        shoparea.push(res[i].shopArea);
+        shopcover.push(res[i].shopCover);
+        shopcategory.push(res[i].categoryName);
+        shopid.push(res[i]._id);
+
+         var myLl = new google.maps.LatLng(res[i].shopLat, res[i].shopLong);
+        var marker = new google.maps.Marker({
+        position: myLl,
+       title:"Hello World!"
+      });
+      marker.setMap(map);
+    }
+     var myData = shopname.map(function(value, index) {
+    return {
+        name: value,
+        area: shoparea[index],
+        cover: shopcover[index],
+        category:shopcategory[index],
+        _id:shopid[index]
+    }
+  });
+    console.log(myData);
+    $scope.categoriesMap=false;
+       $scope.places=myData;
+     
+      
+
+      //createMarkers(res);
+
+    
+       as=cat.length+1;
+});
+    
+    }
+       else{
+
+        console.log("NotFound");
+       }
+
+
+      });
+    } 
+
+}
+}
+
  $scope.searchLink = function(store) {  
 
 var geocoder = new google.maps.Geocoder();
@@ -443,23 +500,45 @@ function callback(results, status,pagination) {
   
            
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    $scope.nearHosp=function(){
   $scope.Results=true;
 
-      createMarker(results);
-    if (pagination.hasNextPage) {
-      
-      $scope.more=false;
-     
+      //createMarker(results);
 
-    $scope.moreButton =function(){
-      console.log("button called")
-         $scope.more=true;
-        pagination.nextPage();
-     }
-    }
-    };
+
   }
+}
+
+var myMarker=[];
+function createMarkers(places) {
+   var bounds = new google.maps.LatLngBounds();
+alert(2);
+   for (var i in places) {
+    console.log(places[i].shopLat, places[i].shopLong);
+       var myLatLng = new google.maps.LatLng(places[i].shopLat, places[i].shopLong);
+
+  var marker = new google.maps.Marker({
+    map: map,
+    location : pos,
+    title:places[i].shopName,
+    position: myLatLng,
+    icon: "img/ambulance1.png"
+  });
+  myMarker.push(marker);
+
+
+}
+
+for(var k=0 ;k<myMarker.length ; k++){
+  myMarker[k].setMap(map);
+     bounds.extend(myLatLng);
+}
+      map.fitBounds(bounds);
+  /*google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(places[i].shopName);
+ 
+    infowindow.open(map, this);
+
+  });*/
 }
 
 function createMarker(places) {
@@ -496,6 +575,7 @@ function createMarker(places) {
    $scope.showMap=function() {
     console.log("call hua")
     $scope.Results=false;
+    $scope.categoriesMap=false;
 $scope.mapItem=true;
   }
      
