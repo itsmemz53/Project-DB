@@ -1,4 +1,4 @@
-	<ion-content >
+
 
 		<div class="list card item-center   " >
 
@@ -18,12 +18,22 @@
 			<div class="item  tabs-secondary tabs-icon-left">
 				<p>{{product.shopArea}}</p>
 				<p>{{product.shopAddr}}</p>
+				<label class="item item-input">
+					<textarea rows="4" cols="50" name="review" ng-model="review" placeholder="Your Review Please ....">
+						</textarea>
+				</label>
 				<button class="button button-large button-block button-royal" style="font-size:20px" ng-click="SendDetails(product)">
-					<i class="ion-eye" style="font-size:35px">&nbsp</i>Add A Review
+					<i class="ion-eye" style="font-size:35px">&nbsp;</i>Add A Review
 				</button>
 
 			</div>
 
+ <ion-scroll zooming="true" direction="y" style="height: 500px">
+			<div class="item" ng-repeat="Review in Reviews" >
+				<h3>{{Review.name}}</h3>
+				<p style="font-size:10px"><i>{{Review.date}}</i></p>
+				<p>{{Review.review}}</p>
+			</div>
+</ion-scroll>
 		</div>
 
-	</ion-content>

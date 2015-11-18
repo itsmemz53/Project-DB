@@ -75,7 +75,8 @@ passport.deserializeUser(function (id, done) {
         done(err, user);
     });
 });
-
+var MyUser="GuestUser";
+var myCat;
 app.set('port', process.env.PORT || 8100);
 passport.use(new LocalStrategy(
     function (username, password, done) {
@@ -84,6 +85,8 @@ passport.use(new LocalStrategy(
         // indicate failure and set a flash message.  Otherwise, return the
         // authenticated `user`.
         console.log(username, password);
+        MyUser=username;
+
         findByUsername(username, function (err, user) {
 
             if (err) {
@@ -167,12 +170,90 @@ app.post('/register', function (req, res) {
 
 });
 
+app.post('/Review', function (req, res) {
+    var collection =db.get('User_Reviews');
+    var review= req.body.review;
+    var Shop =req.body.Shop;
+          var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
 
+var newdate = day + "/" + month + "/" + year;
+var obj={shopId : Shop._id, userId:MyUser ,}
+ var FreshObj={UserId :MyUser , UserReview: review, date:newdate};
+var obj={};
+
+  collection.findOne({ShopId: Shop._id}, {}, function (e, docs2) {
+    if(docs2){
+       collection.remove({ShopId : Shop._id});
+        console.log("Ye purana hai",docs2.Review);
+  
+       
+        console.log("Ye naya hai ", FreshObj);
+        var Comp={};
+        array=null;
+        array=[];
+        var co=0;
+ for(var z in docs2.Review){
+    co++;
+ }
+ console.log(co);
+        for(var k=0;k<co;k++){
+            if(docs2.Review[k]!=null){
+             array.push(docs2.Review[k]);
+         }
+            
+         }
+        
+          
+           array.push(FreshObj);
+           console.log(array.length)
+           for(var l=0 ;l<array.length;l++){
+            Comp[l]=array[l];
+           }
+           obj={ShopId : Shop._id, Review:Comp};
+               
+ collection.insert(obj, function (err, doc) {
+                       
+                        if (err) {
+                            // If it failed, return error
+                            res.send(false);
+                        }
+                        else {
+                            res.send(true);
+                        }
+                    });
+    }
+else{
+    var arra=[];
+    var Com={};
+    arra.push(FreshObj);
+     for(var l=0 ;l<arra.length;l++){
+            Com[l]=arra[l];
+           }
+    obj={ShopId : Shop._id, Review:Com};
+ collection.insert(obj, function (err, doc) {
+                       
+                        if (err) {
+                            // If it failed, return error
+                            res.send(false);
+                        }
+                        else {
+                            res.send(true);
+                        }
+                    });
+
+}
+});
+
+});
 
 
 app.post('/searchIt', function (req, res) {
     var collection =db.get('ProductItems');
     var categ=req.body.category;
+    myCat=categ;
     var search=req.body.search;
     var flag=0;
     console.log("Haan bhai Yaha aGaaya");
@@ -188,8 +269,12 @@ app.post('/searchIt', function (req, res) {
 
                 var str=S(docs2.items[k].item_name).collapseWhitespace().s;
                 console.log(str);
-                console.log(S(str).contains(search));
-                if(S(str).contains(search)){
+                str = str.toLowerCase();
+
+                search=search.toLowerCase();
+                console.log("This Shoud be Match ",str," With this ", search);
+                console.log(S(str).include("",search));
+                if(S(str).include("",search)){
                     flag=1;
                     k=co+1
                 }
@@ -284,15 +369,43 @@ collection.insert(FreshObj,function(e,docs){
 });
 app.get('/getShop/*', function (req, res) {
     var abc = req.params[0];
-
+ var collect = db.get(shop);
+ var collection =db.get("User_Reviews");
     if (abc) {
         console.log("yeh single hai",shop);
-        var obj = findProduct(res, req.params[0], shop);
+           
+    collect.findOne({_id: abc}, {}, function (e, docs) {
+
+        
+        console.log("Shop", docs);
+        if (docs) {
+            collection.findOne({ShopId:abc},{},function(e,result){
+                if(result){
+                    var obj={Shop: docs, Review:result.Review};
+                    res.send(obj);
+                }
+
+            })
+
+
+        }
+        else {
+            return null;
+        }
+         });
+
+
+
+
+
     }
     else {
         res.send({error: true})
     }
 });
+
+
+
 app.post('/ProductItems',function(req,res){
     var collection= req.db.get("ProductItems");
     var obj=[
@@ -432,85 +545,6 @@ exports.GetUser=function(){
 
 
 
-
-
-
-
-
-      /*collection.geoNear(24.885738, 67.074577, {$maxDistance:10,includeLocs: true }, function(err, result) {
-    if(err){
-        console.log('error');
-    }
-    else{
-        console.log(result);
-    }
-  });*/
-     /* collection.find({coordinates : {$geoNear: {$geometry :{  coordinates: [ 24.885738 , 67.074577 ], type: "Point"},distanceField: "dist.calculated", maxDistance: 100,
-        query: { type: "public" },
-        includeLocs: true,
-        num: 50,
-        spherical: true
-     }
-   
-}},function(err,result){
-if(err)console.log(err);
-else console.log(result);
-
-});*/
-
-   /*ar as= collection.find({ coordinates: { $nearSphere: { $geometry: { coordinates: [ 67.074577 , 24.885738] ,type: "Point" }, $maxDistance: 5 * 1609.34 } } },function(err,result){
-if(err)console.log(err);
-else console.log(result);
-
-
-});*/
-
-
- /*  console.log(das);*/
-
-/* collection.findOne({ geometry: { $geoIntersects: { $geometry: { coordinates:  [24.937691 , 67.033492], type: "Point"  } } } },function(err,result){
-if(err)console.log(err);
-else console.log(result);
-
-
-});*/
-
-    /*   collection.find({location:
-   { $geoWithin:
-      { $centerSphere: [ [ 24.937691,  67.033492 ], 5 / 3963.2 ] } } },function(err, docs) {
-    if(err)  console.log(err);
-    else
-        console.log("Returned",docs);
-});
-*/
-
-      /*  collection.find({ coordinates: {$near: {
-     $geometry: {
-        type: "Point" ,
-        coordinates: [24.937691 , 67.033492] 
-     },
-     $maxDistance: 1000,
-     includeLocs: true
-  }}},function(err, docs) {
-    if(err)  console.log(err);
-    else
-        console.log("Returned",docs);
-});
-*/
-
-   /* collection.find({coordinates:{ $geoWithin:{ $centerSphere: [ [24.937691 , 67.033492] , 500 / 3963.2 ] } } },function(e,docs2){
-        if(docs2){
-           console.log(docs2);
-            res.send(docs2);
-        }
-        else{
-            console.log("Not found result");
-            res.send(false);
-
-        }
-
-      });
-*/
 
 
 

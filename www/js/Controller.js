@@ -238,26 +238,53 @@ var cat=[];
        Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
 
 }
-}]).controller('getDetails', ['$scope', 'myService', '$stateParams', '$location',function ($scope, myService, $stateParams,$location
+}]).controller('getDetails', ['$scope', 'myService', '$stateParams', '$location','$state',function ($scope, myService, $stateParams,$location,$state
     ) {
     $scope.id = $stateParams.id;
     console.log($stateParams);
-   
-
+    var userId=[];
+    var Review=[];
+    var myDate=[];
     $scope.SendDetails = function(Product){
         console.log(Product);
+        console.log($scope.review);
+    
+        var myobject={review : $scope.review , Shop : Product};
+         myService.sendReview(myobject).success(function (res) {
+          if(res==true){
+            alert("Your Review Added");
+            $scope.review="";
+             $state.go($state.current, {}, {reload: true});
+          }
+          else{
+            alert("Please try again later")
+          }
 
-        
+
+    });
 
     };
 
    
     myService.getShopsWithId($scope.id).success(function (res) {
-        $scope.product = res;
+        $scope.product = res.Shop;
         $scope.loader=true;
 
+        for(var i in res.Review){
+          userId.push(res.Review[i].UserId);
+          Review.push(res.Review[i].UserReview);
+          myDate.push(res.Review[i].date);
+        }
+         var myData = userId.map(function(value, index) {
+    return {
+        name: value,
+        review: Review[index],
+        date: myDate[index]
+      }
+  });
         console.log($scope.product);
-
+        console.log(myData);
+        $scope.Reviews=myData;
 
     });
 
@@ -282,8 +309,7 @@ $scope.categoriesMap=true;
        kidGarments: false, ladiesGarments: false,
        ladiesUnderGarments: false, mobileCards: false,Perfume: false, petFood: false,sportsWear: false, Tobacco: false,
        Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
-var cat=[];
-var searchResult=[];
+
 $scope.mapItem=false;
 myService.sendProducts().success(function(res){
   if(res==true){
@@ -363,6 +389,8 @@ for(var i=0;i<keyWords.length;i++){
 }
 $scope.searchThis=function(){
   console.log($scope.store);
+  var cat=[];
+var searchResult=[];
 
 if(slat==null){
   alert("Please try Get Location");
@@ -387,6 +415,7 @@ else{
        myService.sendSearch(myObj).success(function(res){
   if(res==true){
     console.log("itemFound");
+     as=100;
     myService.getShop(myObj).success(function(res){
       $scope.Results=true;
       $scope.mapItem=false;
@@ -422,8 +451,9 @@ else{
       //createMarkers(res);
 
     
-       as=cat.length+1;
+       
 });
+
     
     }
        else{

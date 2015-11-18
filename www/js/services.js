@@ -28,11 +28,29 @@ angular.module('dbProject.services',[])
             };
             return $http(req);
         }
+         ergastAPI.sendReview = function (userObj) {
+            var req = {
+                method: 'POST',
+                url: '/Review',
+                data: userObj
+                
+            };
+            return $http(req);
+        }
         ergastAPI.getShop = function (userObj) {
             var req = {
                 method: 'POST',
                 url: '/getShop',
                 data: userObj
+                
+            };
+            return $http(req);
+        }
+        ergastAPI.getReview = function (userObj) {
+            var req = {
+                method: 'GET',
+                url: '/getReview'
+                
                 
             };
             return $http(req);
