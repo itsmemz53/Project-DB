@@ -1,6 +1,7 @@
 
 
 <div class="row back-color">
+	<ion-view class="padding scroll-ag">
 	<div class="row row-center" >
 		<form class="col" role="form" ng-submit="login(authorizationForm)" name="authorizationForm" novalidate="">
 			<label class="item item-input" ng-class="{ 'has-errors' : authorizationForm.username.$invalid && authorizationForm.$submitted, 'no-errors' : authorizationForm.username.$valid}">
@@ -18,7 +19,10 @@
 			<button class="button button-full button-calm" type="submit" >
 				Login
 			</button>
-			<a class="button button-full button-royal" ng-href="/#/register">Don't have an account yet?</a>
+			<a class="button button-full button-assertive" ng-href="/#/register">Don't have an account yet?</a>
+<button type="submit" ng-click="searchLink(store)" class="button button-center button-small button-positive" data-inline="true" ><i class='ion-social-facebook' style="font-size:40px">&nbsp</i></button>
+		
+
 		</form>
 	</div>
 	<script id="error-list.html" type="text/ng-template">
@@ -36,3 +40,4 @@
 		</div>
 	</script>
 </div>
+</ion-view>

@@ -9,12 +9,15 @@
     text-align: center;
 }
 .background, .background .pane, .background .item, .background .item-complex .item-content .col{
-    background-color: #d3ffce;
+    background-color:#edeff4;
 }
 
 .heading{
+    color:rgba(15, 159, 180,1.8);
+    /*position: relative;*/
+    /*top:80px;*/
     font-family: 'Pacifico', cursive;
-    font-size: 100px;
+    font-size: 50px;
 }
 .text-center{
     text-align: center;
@@ -72,3 +75,21 @@
 .back-color {
     background-color: white;
 }
+
+.scroll-pane {
+        background: url(../img/abc.jpg) no-repeat center center fixed; 
+  background-size: 100% 100%;
+   z-index: -1;
+    }
+    .scroll-bg{
+        background: url(../img/abb.jpg)no-repeat center center fixed;
+background-size: 100% 100%;
+z-index: -2;
+    }
+  .scroll-ag{
+        background: url(../img/adc.jpg)no-repeat center center fixed;
+background-size: 100% 100%;
+z-index: -3;
+    }
+  
+

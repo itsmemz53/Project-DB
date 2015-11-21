@@ -1,7 +1,7 @@
 
-    
-               <div data-role="content" class="list">   
-                     <label  class="item item-input item-stacked-label"><h2><span class="input-label">Search Things :</span></h2>
+               <div data-role="content " class="list">  
+             <ion-view class="padding scroll-bg">
+                     <label  class="item item-input item list-inset item-wrap item-stacked-label"><h2><span class="input-label">Search Things :</span></h2>
                   <strong> <input type="text" id="store" ng-model="store" class="store" name="store" placeHolder="Hospital" required="required" data-clear-btn="true"> </strong>
                    </label>
                 
@@ -10,25 +10,25 @@
 
                       </label>
                       <div ng-show="categoriesMap">
-<ion-scroll zooming="true" direction="y" style=" height: 300px">
-         <label class="item" ng-repeat="(color,enabled) in colors" >
+<ion-scroll zooming="true" direction="y" style=" height: 100px">
+         <label class="item item list-inset" ng-repeat="(color,enabled) in colors" >
           <ion-checkbox ng-model="colors[color]">{{color}}</ion-checkbox>
        
     </label>
    </ion-scroll>
  </div>
    <ion-scroll zooming="true" direction="y" style="height: 500px">
-                       <button type="submit" ng-click="fromLink(store)" class="button button-small button-royal" data-inline="true" ><i class='ion-location' style="font-size:20px">&nbsp</i>Get Location</button>
+                       <button type="submit" ng-click="fromLink(store)" class="button button-small  button-calm" data-inline="true" ><i class='ion-location' style="font-size:20px">&nbsp</i>Get Location</button>
                     
-                        <button type="submit" ng-click="searchLink(store)" class="button  button-calm" data-inline="true" ><i class='ion-search' style="font-size:35px">&nbsp</i>Search Location</button>
+                        <button type="submit" ng-click="searchLink(store)" class="button button-small button-calm" data-inline="true" ><i class='ion-search' style="font-size:20px">&nbsp</i>Search Location</button>
                         
                     
-                        <button type="submit" id="button2" ng-click="searchThis()" data-inline="true" class="button  button-balanced" ><i class='ion-ios-search-strong' style="font-size:35px">&nbsp</i>Search Nearby</button>
+                        <button type="submit" id="button2" ng-click="searchThis()" data-inline="true" class="button button-small button-calm" ><i class='ion-ios-search-strong' style="font-size:20px">&nbsp</i>Search Nearby</button>
                   
             
           
                <div id="map-canvas" class="map rounded item size" ng-show="mapItem"></div>
-                <button class="button button-full" ng-click="showMap()">Show in Map</button>
+                <button class="button button-assertive button-full" ng-click="showMap()">Show in Map</button>
                 <div id="results"  class="panel" ng-show="Results">
 
               <h2>Results</h2>
@@ -52,10 +52,4 @@
         </div>
            </ion-scroll>
           </div>
-       
-
-
-
-
-    
-   
+</ion-view>
