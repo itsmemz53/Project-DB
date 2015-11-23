@@ -1,7 +1,11 @@
 /* Empty. Add your own CSS if you like */
-.title h1{
-    color:blue;
+.title{
+    font-color:blue;
+  font-family: 'Pacifico', cursive;
+    font-weight: 900;
+
 }
+
 .item-avatar img {
     background-color: white;
 }
@@ -9,15 +13,18 @@
     text-align: center;
 }
 .background, .background .pane, .background .item, .background .item-complex .item-content .col{
-    background-color:#edeff4;
+    background-color:white;
 }
-
+.item{
+    font-family: cursive;
+    font-color:rgba(15, 159, 180,1.8);
+}
 .heading{
-    color:rgba(15, 159, 180,1.8);
+    color:#E3DAC9;
     /*position: relative;*/
     /*top:80px;*/
     font-family: 'Pacifico', cursive;
-    font-size: 50px;
+    font-size: 80px;
 }
 .text-center{
     text-align: center;

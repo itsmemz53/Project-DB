@@ -9,6 +9,7 @@
     "crypto": "0.0.3",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "fb": "^0.7.3",
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",

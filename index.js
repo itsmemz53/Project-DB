@@ -12,6 +12,7 @@ var categories = [''];
 var S = require('string');
 var fs = require("fs");
 var geolib=require("geolib");
+var FB = require('fb');
 function findByUsername(username, fn) {
     var collection = db.get('loginUsers');
     console.log("yeh user name hai latest!!", username);
@@ -75,6 +76,9 @@ passport.deserializeUser(function (id, done) {
         done(err, user);
     });
 });
+
+
+
 var MyUser="GuestUser";
 var myCat;
 app.set('port', process.env.PORT || 8100);
@@ -248,7 +252,28 @@ else{
 });
 
 });
-
+function searchIt(pat,txt)
+{
+    var M = pat.length;
+    var N = txt.length;
+ 
+    /* A loop to slide pat[] one by one */
+    for (var i = 0; i <= N - M; i++)
+    {
+        var j;
+ 
+        /* For current index i, check for pattern match */
+        for (j = 0; j < M; j++)
+        {
+            if (txt[i + j] != pat[j])
+                break;
+        }
+        if (j == M) // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
+        {
+           return true;
+        }
+    }
+}
 
 app.post('/searchIt', function (req, res) {
     var collection =db.get('ProductItems');
@@ -270,13 +295,11 @@ app.post('/searchIt', function (req, res) {
                 var str=S(docs2.items[k].item_name).collapseWhitespace().s;
                 console.log(str);
                 str = str.toLowerCase();
-
                 search=search.toLowerCase();
                 console.log("This Shoud be Match ",str," With this ", search);
-                console.log(S(str).include("",search));
-                if(S(str).include("",search)){
+                if(searchIt(str,search)==true){
                     flag=1;
-                    k=co+1
+                    k=co+1;
                 }
          }
             
@@ -343,7 +366,6 @@ shop=collect;
 
     
 });
-
 
 
 app.post('/shopProfile',function(req,res){
@@ -556,3 +578,63 @@ exports.GetUser=function(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*app.post('/searchIt', function (req, res) {
+    var collection =db.get('ProductItems');
+    var categ=req.body.category;
+    myCat=categ;
+    var search=req.body.search;
+    var flag=0;
+    console.log("Haan bhai Yaha aGaaya");
+     collection.findOne({categoryName: categ}, {}, function (e, docs2) {
+        if(docs2){
+            console.log("Haan bhai search kerlia ab");
+            var co=0;
+            for(var z in docs2.items){
+    co++;
+         }
+         for(var k=0;k<co;k++){
+            if(docs2.items[k]!=null){
+
+                var str=S(docs2.items[k].item_name).collapseWhitespace().s;
+                console.log(str);
+                str = str.toLowerCase();
+                search=search.toLowerCase();
+                console.log("This Shoud be Match ",str," With this ", search);
+                console.log(S(str).include("",search));
+                if(S(str).include("",search)){
+                    flag=1;
+                    k=co+1
+                }
+         }
+            
+         }
+         
+        }
+        else{
+            console.log("Not found");
+        }
+        if(flag==1){
+            console.log("Haan bhai item mil gaya");
+            res.send(true);
+         }
+         else{
+            res.send(false);
+         }
+     });
+});*/

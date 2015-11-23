@@ -1,29 +1,37 @@
 
-               <div data-role="content " class="list">  
-             <ion-view class="padding scroll-bg">
-                     <label  class="item item-input item list-inset item-wrap item-stacked-label"><h2><span class="input-label">Search Things :</span></h2>
-                  <strong> <input type="text" id="store" ng-model="store" class="store" name="store" placeHolder="Hospital" required="required" data-clear-btn="true"> </strong>
+                  <ion-side-menus >
+    <ion-side-menu-content>
+  <ion-pane >
+  <ion-header-bar class="bar bar-header bar-dark">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon-round" ng-click="toggleLeft"> </button>
+        
+        <h1 class="title" style=" font-size:25px; ">Search It !!</h1>
+      
+    
+  </ion-header-bar>
+  <ion-content class="scroll-pane">
+    <form> 
+                <div class="list">  
+            <label class="item item-input item-select">
+            <div class="input-label">
+                 Categories
+           </div>
+            <select ng-model="selectedCategories.categoryId" ng-options="category.categoryId as category.name for category in chooseCategories" ng-change="openModal(selectedCategories.categoryId)"></select>
+           </label>
+           
+                      <label class="item item-input list-inset " ng-show="searchFor" >
+                  <strong> <input type="text" id="store" ng-model="store" class="store" name="store" placeHolder="Search the World.." required="required"> </strong>
                    </label>
                 
-              <label for="name2b" class="item item-input item-stacked-label" <span class="input-label">Your Location :</span>
-                    <input type="text" id="current" ng-model="from" class="from" name="from" placeHolder="Please Enter Location" required="required" data-clear-btn="true">
-
-                      </label>
                       <div ng-show="categoriesMap">
-<ion-scroll zooming="true" direction="y" style=" height: 100px">
-         <label class="item item list-inset" ng-repeat="(color,enabled) in colors" >
-          <ion-checkbox ng-model="colors[color]">{{color}}</ion-checkbox>
-       
-    </label>
-   </ion-scroll>
+
  </div>
-   <ion-scroll zooming="true" direction="y" style="height: 500px">
+ </div>
+ </form> 
                        <button type="submit" ng-click="fromLink(store)" class="button button-small  button-calm" data-inline="true" ><i class='ion-location' style="font-size:20px">&nbsp</i>Get Location</button>
+                                           
                     
-                        <button type="submit" ng-click="searchLink(store)" class="button button-small button-calm" data-inline="true" ><i class='ion-search' style="font-size:20px">&nbsp</i>Search Location</button>
-                        
-                    
-                        <button type="submit" id="button2" ng-click="searchThis()" data-inline="true" class="button button-small button-calm" ><i class='ion-ios-search-strong' style="font-size:20px">&nbsp</i>Search Nearby</button>
+                        <button type="submit" id="button2" ng-click="searchThis(store)" data-inline="true" class="button button-small button-calm" ><i class='ion-ios-search-strong' style="font-size:20px">&nbsp</i>Search Nearby</button>
                   
             
           
@@ -31,25 +39,37 @@
                 <button class="button button-assertive button-full" ng-click="showMap()">Show in Map</button>
                 <div id="results"  class="panel" ng-show="Results">
 
-              <h2>Results</h2>
+              <h2>Shops With Profile</h2>
               <div class="list">
       <div ng-repeat="place in places" >
         <a class="item item-avatar" ng-href='/#/details/{{place._id}}'>
           <img class="product-thumbnail" ng-src={{place.cover}}>
          <h2 style="font-size:22px">{{place.name}}</h2>
          <p>{{place.area}}</p>
-
-
-          <div>
-
-          </div>
         </a>
-
-      </div>
-
-    </div>
-             
-        </div>
-           </ion-scroll>
+       </div>
           </div>
-</ion-view>
+             <div>
+              <h2>Extra Shops</h2>
+               <div class="list">
+                   <div ng-repeat="extra in extras" >
+                     <h2 style="font-size:22px">{{extra.name}}</h2>
+                    </div>
+                </div>
+             </div>
+        </div>
+          
+  </ion-content>
+      </ion-side-menu-content>
+          <ion-side-menu side="left">
+
+    <ion-list >
+      <ion-item nav-clear menu-toggle>  <h3>  Top Ten Shops <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+      <ion-item nav-clear menu-toggle>  <h3>  Most Searched Items <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+      <ion-item nav-clear menu-toggle>  <h3>  Your Wishlist <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+
+         </ion-list>
+    </ion-side-menu>
+  </ion-side-menus>
+
+
