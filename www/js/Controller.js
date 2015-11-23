@@ -304,6 +304,9 @@ var slong=null;
 var gKey;
  $scope.searchFor=true;
 var globalCat=null;
+var mapCat=null;
+$scope.mylist=false;
+$scope.mymap=true;
 $scope.categoriesMap=true;
      $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
          babyProducts: false, Cosmetics: false,
@@ -323,7 +326,12 @@ $scope.categoriesMap=true;
         {categoryId : 9, name : "Places", slug: "Places"}    ];
 
 
-  
+  $scope.showList=function(){
+    $scope.mapItem=false;
+    $scope.Results=true;
+    $scope.mymap=true;
+    $scope.mylist=false;
+  }
          $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
 
          //Modals Work Down
@@ -428,7 +436,7 @@ $scope.categoriesMap=true;
           }
           else if(myid==5)
           {
-            console.log("Me yaha hu",myid);
+            console.log("Me yaha hu",index);
                 console.log($scope.chooseWomen[index].slug);
         globalCat=$scope.chooseWomen[index].slug;
         gKey=$scope.chooseWomen[index].keyword;
@@ -468,7 +476,7 @@ $scope.categoriesMap=true;
           else if(myid==9){
             console.log("Me yaha hu",myid);
                 console.log($scope.choosePlace[index].slug);
-        globalCat=$scope.choosePlace[index].slug;
+        mapCat=$scope.choosePlace[index].slug;
         gKey=$scope.choosePlace[index].keyword;
             $scope.searchFor=false;
             $scope.modal9.hide();
@@ -528,7 +536,7 @@ $scope.eduFunction=function(myid){
 
 
  $scope.chooserestaurantsandfoods=[
-        {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:""},
+        {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:null},
         {categoryId : 1, name : "Cafe", slug: "Cafe",keyword:"cafe" },
         {categoryId : 2, name : "Chaat & Gola Shop", slug: "chaatGolaShop",keyword:"cafe"},
         {categoryId : 3, name : "Coconut", slug: "Coconut" ,keyword:"grocery_or_supermarket"},{categoryId : 4, name : "Dhaba", slug: "Dhaba" ,keyword:"cafe"},
@@ -560,7 +568,7 @@ $scope.restaurantsandfoodsFunction=function(myid){
 
 
   $scope.chooseMen=[
-            {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:""},
+            {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:null},
         {categoryId : 1, name : "Men's Wear", slug: "gentGarments",keyword:"clothing_store" },
         {categoryId : 2, name : "Watches/Wallet", slug: "Watches",keyword:"grocery_or_supermarket"},
         {categoryId : 3, name : "Men's UnderGarments", slug: "gentsUnderGarments" ,keyword:"grocery_or_supermarket"}, {categoryId : 4, name : "Men's Shoes", slug: "gentShoes", keyword:"shoe_store"},
@@ -582,7 +590,7 @@ $scope.restaurantsandfoodsFunction=function(myid){
 
 
   $scope.chooseWomen=[
-        {categoryId : 0, name : "Choose Category", slug: "Choose Category" , keyword:""},
+        {categoryId : 0, name : "Choose Category", slug: "Choose Category" , keyword:null},
         {categoryId : 1, name : "Women's Wear", slug: "ladiesGarments" , keyword:"clothing_store"},
         {categoryId : 2, name : "Watches", slug: "Watches" , keyword:"grocery_or_supermarket"},
         {categoryId : 3, name : "Women UnderGarments", slug: "ladiesUnderGarments", keyword:"grocery_or_supermarket"},
@@ -606,7 +614,7 @@ $scope.restaurantsandfoodsFunction=function(myid){
 
 
   $scope.chooseKid=[
-          {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:""},
+          {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:null},
         {categoryId : 1, name : "Kid's Wear", slug: "kidGarments",keyword:"clothing_store" },
         {categoryId : 2, name : "Kid's Shoes", slug: "kidShoes" ,keyword:"shoe_store"},
         {categoryId : 3, name : "Baby Products", slug: "babyProducts" ,keyword:"grocery_or_supermarket"},{categoryId : 4, name : "Toys", slug: "Toys" ,keyword:"grocery_or_supermarket"},
@@ -626,7 +634,7 @@ $ionicModal.fromTemplateUrl('kids-modal.html', {
 
 
    $scope.choosegenItem=[
-               {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:""},
+               {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:null},
         {categoryId : 1, name : "Grocery", slug: "Groceries",keyword:"grocery_or_supermarket" },
         {categoryId : 2, name : "Sweets and Mithai", slug: "Sweets",keyword:"grocery_or_supermarket"},
         {categoryId : 3, name : "Vegetables", slug: "Vegetables" ,keyword:"grocery_or_supermarket"},{categoryId : 4, name : "Bakery", slug: "bakery" ,keyword:"bakery"},
@@ -646,10 +654,10 @@ $ionicModal.fromTemplateUrl('kids-modal.html', {
 
 
    $scope.choosehouseHold=[
-             { categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:""},
+             { categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:null},
         {categoryId : 1, name : "Computer", slug: "Computer",keyword:"electronics_store" },
         {categoryId : 2, name : "Electronics Appliances", slug: "electronicAppliances",keyword:"electronics_store"},
-        {categoryId : 3, name : "Electric Items", slug: "electricItems" ,keyword:"electronics_store"},{categoryId : 4, name : "Furniture", slug: "Furniture" ,keyword:"furniture_store"},
+        {categoryId : 3, name : "Electric Items", slug: "Electronics" ,keyword:"electronics_store"},{categoryId : 4, name : "Furniture", slug: "Furniture" ,keyword:"furniture_store"},
         {categoryId : 5, name : "Hardware", slug: "Hardware" ,keyword:"furniture_store"},{categoryId : 6, name : "Paints", slug: "Paints" ,keyword:"painter"},{categoryId : 7, name : "Sanitary", slug: "Sanitary" ,keyword:"plumber"}, {categoryId : 8, name : "Mobile", slug: "Mobile" ,keyword:"electronics_store"}  ];
 
             $scope.selectedhouseHold = angular.copy($scope.choosehouseHold[0]);
@@ -667,7 +675,7 @@ $ionicModal.fromTemplateUrl('kids-modal.html', {
 
 
   $scope.choosePlace=[
-        {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:""},
+        {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:null},
         {categoryId : 1, name : "", slug: "",keyword:"" },
         {categoryId : 2, name : "", slug: "",keyword:""},
         {categoryId : 3, name : "", slug: "" ,keyword:""},{categoryId : 4, name : "", slug: "" ,keyword:""},
@@ -687,9 +695,9 @@ $ionicModal.fromTemplateUrl('kids-modal.html', {
 
 
 
+var boo=0;
 
-
-
+var nowShow=false;
 
 
 
@@ -747,10 +755,7 @@ for(var i=0;i<keyWords.length;i++){
           event.preventDefault();
        
       if (navigator.geolocation) {
-
-     $scope.fromLink = function(store) {  
-        console.log(store);
-          navigator.geolocation.getCurrentPosition(function(position) {
+navigator.geolocation.getCurrentPosition(function(position) {
 
             var geocoder = new google.maps.Geocoder();
              geocoder.geocode({
@@ -772,6 +777,14 @@ for(var i=0;i<keyWords.length;i++){
                 position: pos,
                 
             });
+           
+  
+       
+        });
+
+$scope.searchThis=function(store){
+
+           console.log("This is the keyword",gKey);
               var marker1 = new google.maps.Marker({
             position: pos,
             icon: "img/ambulance1.png"
@@ -782,7 +795,7 @@ for(var i=0;i<keyWords.length;i++){
         
              var request = {
             location: pos,
-            radius: 5000,
+            radius: 1000,
             types: [gKey]
             };
            ind=null;
@@ -790,21 +803,17 @@ for(var i=0;i<keyWords.length;i++){
   
           var service = new google.maps.places.PlacesService(map);
           service.nearbySearch(request, callback);
-        })
-}
-$scope.searchThis=function(store){
-
 var searchResult=[];
 console.log(store);
-if(slat==null){
-  alert("Please try Get Location");
-}
-else{
+
   var j=0
   if(globalCat==null){
     alert("Please Choose Category");
   }
        else{
+
+        if(mapCat == null){
+        console.log(globalCat);
   var myObj={search:store , category : globalCat, lat:slat, lon:slong};
   var shopname=[];
   var shoparea=[];
@@ -816,7 +825,7 @@ else{
     console.log("itemFound");
 
     myService.getShop(myObj).success(function(res){
-      $scope.Results=true;
+    boo=1;
       $scope.mapItem=false;
       for(var i in res){
         shopname.push(res[i].shopName);
@@ -828,7 +837,7 @@ else{
          var myLl = new google.maps.LatLng(res[i].shopLat, res[i].shopLong);
         var marker = new google.maps.Marker({
         position: myLl,
-       title:"Hello World!"
+       title:res[i].shopName
       });
       marker.setMap(map);
     }
@@ -859,19 +868,76 @@ else{
     }
        else{
 
-        console.log("NotFound");
+        alert("Not Found");
        }
 
 
       });
     }
+    else{
+       var myObj={search:store , category : mapCat, lat:slat, lon:slong};
+       var shopname=[];
+      var shoparea=[];
+  var shopcover=[];
+  var shopcategory=[];
+  var shopid=[];
+ myService.getShop(myObj).success(function(res){
+      $scope.Results=true;
+      $scope.mapItem=false;
+      for(var i in res){
+        shopname.push(res[i].shopName);
+        shoparea.push(res[i].shopArea);
+        shopcover.push(res[i].shopCover);
+        shopcategory.push(res[i].categoryName);
+        shopid.push(res[i]._id);
+
+         var myLl = new google.maps.LatLng(res[i].shopLat, res[i].shopLong);
+        var marker = new google.maps.Marker({
+        position: myLl,
+       title:res[i].shopName
+      });
+      marker.setMap(map);
+    }
+     var myData = shopname.map(function(value, index) {
+    return {
+        name: value,
+        area: shoparea[index],
+        cover: shopcover[index],
+        category:shopcategory[index],
+        _id:shopid[index]
+    }
+  });
+
+
+    console.log(myData);
+    $scope.categoriesMap=false;
+       $scope.places=myData;
+     
+      
+
+      //createMarkers(res);
+
+    
+       
+});
+
+    }
+     if(boo==1){
+  $scope.Results=true;
+ }
+
 
 }
+
+
+
+
 },function() {
             handleNoGeolocation(true);
         };
     } else {
         // Browser doesn't support Geolocation
+        alert("Please Open Your GPS");
         handleNoGeolocation(false);
     }
 }
@@ -942,7 +1008,8 @@ function createMarker(places) {
   
    bounds.extend(place.geometry.location);
 }
-  $scope.extra=places;
+console.log("Here is places",places);
+  $scope.extras=places;
  map.fitBounds(bounds);
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(place.name);
@@ -957,6 +1024,8 @@ function createMarker(places) {
     $scope.Results=false;
     $scope.categoriesMap=false;
 $scope.mapItem=true;
+$scope.mymap=false;
+$scope.mylist=true;
   }
      
        
@@ -965,3 +1034,19 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
   
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
