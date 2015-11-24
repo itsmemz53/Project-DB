@@ -1,4 +1,4 @@
-var app = angular.module('dbProject', ['ionic','dbProject.controllers', 'dbProject.services' ]);
+var app = angular.module('dbProject', ['ionic','dbProject.controllers', 'dbProject.services','ngCordova' ]);
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

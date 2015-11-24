@@ -376,7 +376,7 @@ $window.location.reload(true);
        initialize();
 
     $scope.doRefresh = function() {
-   initialize();
+$window.location.reload(true);
        // Stop the ion-refresher from spinning
        $scope.$broadcast('scroll.refreshComplete');
     
@@ -393,7 +393,7 @@ $window.location.reload(true);
 var globalCat=null;
 var mapCat=null;
 $scope.mylist=false;
-$scope.mymap=true;
+$scope.mymap=false;
 $scope.categoriesMap=true;
      $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
          babyProducts: false, Cosmetics: false,
@@ -853,6 +853,8 @@ var nowShow=false;
 
 
 
+
+
 $scope.mapItem=false;
 myService.sendProducts().success(function(res){
   if(res==true){
@@ -863,11 +865,7 @@ myService.sendProducts().success(function(res){
 
 function initialize() {
   var pyrmont;
-  var mapOptions = {
-        zoom: 25,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
- map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
+ var mapOptions
 var ind=null;
                  console.log("here")
                 // console.log(store);
@@ -902,6 +900,12 @@ navigator.geolocation.getCurrentPosition(function(position) {
               console.log("error");
             });
             pos=new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                 mapOptions = {
+                  center:pos,
+                zoom: 15,
+               mapTypeId: google.maps.MapTypeId.ROADMAP
+              };
+ map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
              infowindow = new google.maps.InfoWindow({
                 map: map,
                 position: pos,
@@ -914,6 +918,15 @@ navigator.geolocation.getCurrentPosition(function(position) {
 
 $scope.searchThis=function(store){
 
+var searchResult=[];
+console.log(store);
+
+  var j=0
+  if(globalCat==null && mapCat==null){
+    alert("Please Choose Category");
+  }
+       else{
+$scope.mymap=true;
            console.log("This is the keyword",gKey);
               var marker1 = new google.maps.Marker({
             position: pos,
@@ -922,6 +935,7 @@ $scope.searchThis=function(store){
               infowindow.setContent("Me");
               marker1.setMap(map);
              map.setCenter(pos);
+            map.setZoom(15);
         
              var request = {
             location: pos,
@@ -933,15 +947,6 @@ $scope.searchThis=function(store){
   
           var service = new google.maps.places.PlacesService(map);
           service.nearbySearch(request, callback);
-var searchResult=[];
-console.log(store);
-
-  var j=0
-  if(globalCat==null){
-    alert("Please Choose Category");
-  }
-       else{
-
         if(mapCat == null){
         console.log(globalCat);
   var myObj={search:store , category : globalCat, lat:slat, lon:slong};
@@ -1075,8 +1080,6 @@ function callback(results, status,pagination) {
   
            
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-  $scope.Results=true;
-
       createMarker(results);
 
 
@@ -1084,37 +1087,6 @@ function callback(results, status,pagination) {
 }
 
 var myMarker=[];
-function createMarkers(places) {
-   var bounds = new google.maps.LatLngBounds();
-alert(2);
-   for (var i in places) {
-    console.log(places[i].shopLat, places[i].shopLong);
-       var myLatLng = new google.maps.LatLng(places[i].shopLat, places[i].shopLong);
-
-  var marker = new google.maps.Marker({
-    map: map,
-    location : pos,
-    title:places[i].shopName,
-    position: myLatLng,
-    icon: "img/ambulance1.png"
-  });
-  myMarker.push(marker);
-
-
-}
-
-for(var k=0 ;k<myMarker.length ; k++){
-  myMarker[k].setMap(map);
-     bounds.extend(myLatLng);
-}
-      map.fitBounds(bounds);
-  /*google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(places[i].shopName);
- 
-    infowindow.open(map, this);
-
-  });*/
-}
 
 function createMarker(places) {
   $scope.places=null;
@@ -1140,15 +1112,19 @@ function createMarker(places) {
 console.log("Here is places",places);
   $scope.extras=places;
  map.fitBounds(bounds);
+
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(place.name);
  
     infowindow.open(map, this);
 
   });
+  map.setCenter(pos);
+map.setZoom(15);
 }
 
    $scope.showMap=function() {
+
     console.log("call hua")
     $scope.Results=false;
     $scope.categoriesMap=false;
