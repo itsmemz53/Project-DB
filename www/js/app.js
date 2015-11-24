@@ -28,7 +28,6 @@ app.run(function($ionicPlatform) {
         });
             $stateProvider.state('details', {
             url: '/details/:id',
-             cache:false,
             templateUrl: '/partials/Single_Shop.html',
             controller: 'getDetails'
         });
@@ -62,6 +61,13 @@ app.run(function($ionicPlatform) {
             url: '/shopProfile',
             templateUrl: '/partials/shopProfile.html',
             controller: "shopProfile"
+
+
+        });
+         $stateProvider.state('userReviews', {
+            url: '/userReviews',
+            templateUrl: '/partials/userReviews.html',
+            controller: "userReviews"
 
 
         });

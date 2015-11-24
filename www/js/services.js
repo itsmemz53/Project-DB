@@ -46,6 +46,15 @@ angular.module('dbProject.services',[])
             };
             return $http(req);
         }
+            ergastAPI.getUserReview = function (userObj) {
+            var req = {
+                method: 'POST',
+                url: '/getReview',
+                data: userObj
+                
+            };
+            return $http(req);
+        }
         ergastAPI.getReview = function (userObj) {
             var req = {
                 method: 'GET',

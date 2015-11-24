@@ -184,7 +184,7 @@ var day = dateObj.getUTCDate();
 var year = dateObj.getUTCFullYear();
 
 var newdate = day + "/" + month + "/" + year;
-var obj={shopId : Shop._id, userId:MyUser ,}
+
  var FreshObj={UserId :MyUser , UserReview: review, date:newdate};
 var obj={};
 
@@ -225,8 +225,8 @@ var obj={};
                             res.send(false);
                         }
                         else {
-                            res.send(true);
-                        }
+                             addReviewToShop(req,res);                        
+                         }
                     });
     }
 else{
@@ -244,7 +244,7 @@ else{
                             res.send(false);
                         }
                         else {
-                            res.send(true);
+                            addReviewToShop(req,res);
                         }
                     });
 
@@ -252,6 +252,111 @@ else{
 });
 
 });
+
+app.post('/getReview', function (req, res) {
+    var collection=db.get("Shop_Reviews");
+    if(MyUser !== "GuestUser"){
+    collection.findOne({UserId: MyUser},{},function(e,docs){
+        if(docs){
+            console.log(docs.Review);
+            res.send(docs);
+
+        }
+        else{
+            res.send(false);
+        }
+
+
+    });
+}
+else{
+    res.send("register");
+}
+});
+
+function addReviewToShop(req,res){
+if(MyUser !== "GuestUser"){
+ var collection =db.get('Shop_Reviews');
+    var review= req.body.review;
+    var Shop =req.body.Shop;
+    var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+
+var newdate = day + "/" + month + "/" + year;
+
+ var FreshObj={shopId:Shop._id,shopName :Shop.shopName , UserReview: review, date:newdate};
+var obj={};
+
+  collection.findOne({UserId: MyUser}, {}, function (e, docs2) {
+    if(docs2){
+       collection.remove({UserId: MyUser});
+        console.log("Ye purana hai",docs2.Review);
+  
+       
+        console.log("Ye naya hai ", FreshObj);
+        var Comp={};
+        array=null;
+        array=[];
+        var co=0;
+ for(var z in docs2.Review){
+    co++;
+ }
+ console.log(co);
+        for(var k=0;k<co;k++){
+            if(docs2.Review[k]!=null){
+             array.push(docs2.Review[k]);
+         }
+            
+         }
+        
+          
+           array.push(FreshObj);
+           console.log(array.length)
+           for(var l=0 ;l<array.length;l++){
+            Comp[l]=array[l];
+           }
+           obj={UserId: MyUser, Review:Comp};
+               
+ collection.insert(obj, function (err, doc) {
+                       
+                        if (err) {
+                            // If it failed, return error
+                            res.send(false);
+                        }
+                        else {
+                            res.send(true);
+                        }
+                    });
+    }
+else{
+    var arra=[];
+    var Com={};
+    arra.push(FreshObj);
+     for(var l=0 ;l<arra.length;l++){
+            Com[l]=arra[l];
+           }
+    obj={UserId: MyUser, Review:Com};
+ collection.insert(obj, function (err, doc) {
+                       
+                        if (err) {
+                            // If it failed, return error
+                            res.send(false);
+                        }
+                        else {
+                            res.send(true);
+                        }
+                    });
+
+}
+});
+}
+else
+    res.send("register");
+}
+
+
 function searchIt(pat,txt)
 {
     var M = pat.length;
@@ -298,6 +403,11 @@ app.post('/searchIt', function (req, res) {
                 search=search.toLowerCase();
                 console.log("This Shoud be Match ",str," With this ", search);
                 if(searchIt(str,search)==true){
+
+                    flag=1;
+                    k=co+1;
+                }
+                if(searchIt(search,str)==true){
                     flag=1;
                     k=co+1;
                 }
@@ -425,6 +535,8 @@ app.get('/getShop/*', function (req, res) {
         res.send({error: true})
     }
 });
+
+
 
 
 

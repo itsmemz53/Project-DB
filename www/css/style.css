@@ -1,25 +1,25 @@
 /* Empty. Add your own CSS if you like */
 .title{
-    font-color:blue;
+
   font-family: 'Pacifico', cursive;
     font-weight: 900;
 
 }
 .title1{
-    font-color:blue;
+
   font-family:  cursive;
     font-weight: 900;
 
 }
 
 .item-avatar img {
-    background-color: white;
+
 }
 .item-center{
     text-align: center;
 }
 .background, .background .pane, .background .item, .background .item-complex .item-content .col{
-    background-color:white;
+
 }
 .item{
     font-family: cursive;
@@ -30,7 +30,7 @@
     /*position: relative;*/
     /*top:80px;*/
     font-family: 'Pacifico', cursive;
-    font-size: 80px;
+    font-size: 45px;
 }
 .text-center{
     text-align: center;

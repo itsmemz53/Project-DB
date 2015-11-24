@@ -1,0 +1,48 @@
+
+
+	  <ion-side-menus>
+    <ion-side-menu-content>
+  <ion-pane >
+
+ <ion-header-bar class="bar bar-header bar-dark">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon-round" ng-click="toggleLeft"> </button>
+  <h1 class="title" style=" font-size:25px; ">Search It !!</h1>
+      
+     
+    
+  </ion-header-bar>
+  <ion-header-bar class="bar-subheader bar-dark">
+  <h1 class="title">Your Reviews</h1>
+  </ion-header-bar>
+
+<ion-content >
+ <div ng-show="This">
+  <h1> You have Added No Reviews Yet !! </h1>
+ </div>
+		<div class="list">
+  <div class="item" ng-repeat="Review in Reviews" >
+    <a class="item item-avatar" ng-click="hello()" ng-href='/#/details/{{Review.sid}}'>
+        <h3>{{Review.name}}</h3>
+        <p style="font-size:10px"><i>{{Review.date}}</i></p>
+        <p>{{Review.review}}</p>
+      </div>
+</a>
+		</div>
+	</ion-content>
+
+
+</ion-pane>
+    
+    </ion-side-menu-content>
+        <ion-side-menu side="left">
+
+    <ion-list >
+    <a  ng-click="hello()" ng-href="/#/home"> <ion-item nav-clear menu-toggle>  <h3> Home <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item></a>
+     <a  ng-click="hello()" ng-href="/#/userReviews"> <ion-item nav-clear menu-toggle>  <h3>  Your Reviews <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item></a>
+      <ion-item nav-clear menu-toggle>  <h3>  Recommended Shops<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+      <ion-item nav-clear menu-toggle>  <h3>  About Us<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+            <ion-item nav-clear menu-toggle>  <h3>  Logout<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+
+         </ion-list>
+    </ion-side-menu>
+  </ion-side-menus>

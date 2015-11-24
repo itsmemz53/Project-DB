@@ -1,5 +1,4 @@
-
-                  <ion-side-menus >
+<ion-side-menus >
     <ion-side-menu-content>
   <ion-pane >
   <ion-header-bar class="bar bar-header bar-dark">
@@ -10,6 +9,10 @@
     
   </ion-header-bar>
   <ion-content class="scroll-pane">
+    <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
   <div class="col col-center ">
     <form> 
                 <div class="list">  
@@ -56,7 +59,7 @@
               <h2>Shops With Profile</h2>
               <div class="list">
       <div ng-repeat="place in places" >
-        <a class="item item-avatar" ng-href='/#/details/{{place._id}}'>
+        <a class="item item-avatar" ng-click="hello()" ng-href='/#/details/{{place._id}}'>
           <img class="product-thumbnail" ng-src={{place.cover}}>
          <h2 style="font-size:22px">{{place.name}}</h2>
          <p>{{place.area}}</p>
@@ -78,9 +81,11 @@
           <ion-side-menu side="left">
 
     <ion-list >
-      <ion-item nav-clear menu-toggle>  <h3>  Top Ten Shops <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
-      <ion-item nav-clear menu-toggle>  <h3>  Most Searched Items <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
-      <ion-item nav-clear menu-toggle>  <h3>  Your Wishlist <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+     <a  ng-click="hello()" ng-href="/#/home"> <ion-item nav-clear menu-toggle>  <h3> Home <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item></a>
+        <a ng-click="hello()" ng-href="/#/userReviews" > <ion-item nav-clear menu-toggle>  <h3>  Your Reviews <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item></a>
+      <ion-item nav-clear menu-toggle>  <h3>  Recommended Shops<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+      <ion-item nav-clear menu-toggle>  <h3>  About Us<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+            <ion-item nav-clear menu-toggle>  <h3>  Logout<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
 
          </ion-list>
     </ion-side-menu>

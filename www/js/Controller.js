@@ -175,13 +175,27 @@ angular.module('dbProject.controllers', [])
 
     });
 }]).controller('shopProfile', ['$scope', 'myService','$location', function ($scope, myService,$location) {   
-         $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
-         babyProducts: false, Cosmetics: false,
-       Crockeries: false, eyeWear: false,
-       gentGarments: false, handBag_purse_keyChain: false,
-       kidGarments: false, ladiesGarments: false,
-       ladiesUnderGarments: false, mobileCards: false,Perfume: false, petFood: false,sportsWear: false, Tobacco: false,
-       Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
+         $scope.colors = {autoParts: false, Batteries: false,Electronics: false, bicyleShop: false,
+         bikeShop: false, carShop: false,
+       Rental: false, showRooms: false,
+       Washing: false, Books: false,
+       fitnessEquipments: false, Stationary: false,
+       sportsWear: false, sportsAccesories: false,Cafe: false, chaatGolaShop: false,Dhaba: false, Coconut: false,
+
+       Restaurants: false, Soup: false,gentGarments: false, Watches: false,gentsUnderGarments: false, gentShoes: false,
+       Perfume: false, eyeWear: false,ladiesGarments: false, ladiesUnderGarments: false,ladiesShoes: false, Cosmetics: false,
+       artificialJewelery: false, handBag_purse_keyChain: false,kidGarments: false, kidShoes: false,babyProducts: false, Toys: false,
+       Groceries: false, Sweets: false,Vegetables: false, bakery: false,Fruits: false, pharmacy: false,
+       aquarium: false, movieGames: false,Gifts: false, dairyProduct: false,Tobacco: false, mobileCards: false,
+       Computer: false, electronicAppliances: false,electricItems: false, Furniture: false,Hardware: false, Paints: false,
+       Sanitary: false, Mobile: false,
+
+
+       gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
+       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
+       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
+       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
+       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false};
 var cat=[];
  $scope.stepsModel = [];
 
@@ -229,17 +243,31 @@ var cat=[];
     $scope.shopLat='';
     $scope.stepsModel[0]='';
     $scope.imageIsLoaded='';
- $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
-         babyProducts: false, Cosmetics: false,
-       Crockeries: false, eyeWear: false,
-       gentGarments: false, handBag_purse_keyChain: false,
-       kidGarments: false, ladiesGarments: false,
-       ladiesUnderGarments: false, mobileCards: false,Perfume: false, petFood: false,sportsWear: false, Tobacco: false,
-       Watches: false, gentShoes: false,ladiesShoes: false, Groceries: false,Toys_PartyItems_Balls_Stationary: false};
+ $scope.colors = {autoParts: false, Batteries: false,Electronics: false, bicyleShop: false,
+         bikeShop: false, carShop: false,
+       Rental: false, showRooms: false,
+       Washing: false, Books: false,
+       fitnessEquipments: false, Stationary: false,
+       sportsWear: false, sportsAccesories: false,Cafe: false, chaatGolaShop: false,Dhaba: false, Coconut: false,
 
+       Restaurants: false, Soup: false,gentGarments: false, Watches: false,gentsUnderGarments: false, gentShoes: false,
+       Perfume: false, eyeWear: false,ladiesGarments: false, ladiesUnderGarments: false,ladiesShoes: false, Cosmetics: false,
+       artificialJewelery: false, handBag_purse_keyChain: false,kidGarments: false, kidShoes: false,babyProducts: false, Toys: false,
+       Groceries: false, Sweets: false,Vegetables: false, bakery: false,Fruits: false, pharmacy: false,
+       aquarium: false, movieGames: false,Gifts: false, dairyProduct: false,Tobacco: false, mobileCards: false,
+       Computer: false, electronicAppliances: false,electricItems: false, Furniture: false,Hardware: false, Paints: false,
+       Sanitary: false, Mobile: false,
+
+
+       gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
+       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
+       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
+       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
+       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false};
 }
-}]).controller('getDetails', ['$scope', 'myService', '$stateParams', '$location','$state',function ($scope, myService, $stateParams,$location,$state
-    ) {
+}]).controller('getDetails', ['$scope', 'myService', '$stateParams', '$location','$window','$state',function ($scope, myService,$stateParams,$location,$window,$state){
+  //$window.location.reload(true);
+ 
     $scope.id = $stateParams.id;
     console.log($stateParams);
     var userId=[];
@@ -254,7 +282,7 @@ var cat=[];
           if(res==true){
             alert("Your Review Added");
             $scope.review="";
-             $state.go($state.current, {}, {reload: true});
+           $window.location.reload(true);
           }
           else{
             alert("Please try again later")
@@ -287,6 +315,54 @@ var cat=[];
         $scope.Reviews=myData;
 
     });
+     $scope.hello=function(){
+$window.location.reload(true);
+ }
+
+}]).controller('userReviews', ['$scope', 'myService', '$stateParams', '$location','$state','$window',function ($scope,myService,$stateParams,$location,$state,$window){
+  //$window.location.reload(true);
+  $scope.This=false;
+  $scope.hello=function(){
+$window.location.reload(true);
+ }
+  $state.go($state.current, {}, {reload: true});
+      var userId=[];
+      var shopid=[];
+    var Review=[];
+    var myDate=[];
+   var obj={abc:"abc"};
+    myService.getUserReview(obj).success(function (res) {
+      if(res==false){
+  
+        $scope.This=true;
+      }
+      else if(res=="register"){
+        alert("Please Login First");
+        $location.path("/login");
+        $window.location.reload(true);
+      } 
+      else{       
+        for(var i in res.Review){
+          shopid.push(res.Review[i].shopId);
+          userId.push(res.Review[i].shopName);
+          Review.push(res.Review[i].UserReview);
+          myDate.push(res.Review[i].date);
+        }
+         var myData = userId.map(function(value, index) {
+    return {
+
+        name: value,
+        sid:shopid[index],
+        review: Review[index],
+        date: myDate[index]
+      }
+  });
+        console.log(myData);
+
+        $scope.Reviews=myData;
+}
+    });
+  
 
 }]).controller('Main', ['$scope', 'myService','$location', function ($scope, myService,$location) {            
 
@@ -295,14 +371,25 @@ var cat=[];
     console.log($scope.pic);
   }
     
-}]).controller('Maps', ['$scope', 'myService','$location','$ionicModal', function ($scope, myService,$location,$ionicModal) {
+}]).controller('Maps', ['$scope', 'myService','$state','$location','$ionicModal','$window', function ($scope, myService,$state,$location,$ionicModal,$window) {
   var map;
+       initialize();
+
+    $scope.doRefresh = function() {
+   initialize();
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+    
+  }
 var infowindow;
 var pos;
 var slat=null;
 var slong=null;
 var gKey;
  $scope.searchFor=true;
+ $scope.hello=function(){
+$window.location.reload(true);
+ }
 var globalCat=null;
 var mapCat=null;
 $scope.mylist=false;
@@ -511,7 +598,7 @@ $scope.categoriesMap=true;
         {categoryId : 1, name : "Books", slug: "Books",keyword:"book_store" },
         {categoryId : 2, name : "Fitness Equipments", slug: "fitnessEquipments",keyword:"grocery_or_supermarket"},
         {categoryId : 3, name : "Stationary", slug: "Stationary" ,keyword:"grocery_or_supermarket"},{categoryId : 4, name : "Sports Wear", slug: "sportsWear" ,keyword:"grocery_or_supermarket"},
-        {categoryId : 5, name : "Sports Accessories", slug: "sportsAccesories" ,keyword:"grocery_or_supermarket"}];
+        {categoryId : 5, name : "Sports Accessories", slug: "Accessories" ,keyword:"grocery_or_supermarket"}];
 
   
          $scope.selectedEducation = angular.copy($scope.chooseEducation[0]);
@@ -675,11 +762,54 @@ $ionicModal.fromTemplateUrl('kids-modal.html', {
 
 
   $scope.choosePlace=[
-        {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:null},
-        {categoryId : 1, name : "", slug: "",keyword:"" },
-        {categoryId : 2, name : "", slug: "",keyword:""},
-        {categoryId : 3, name : "", slug: "" ,keyword:""},{categoryId : 4, name : "", slug: "" ,keyword:""},
-        {categoryId : 5, name : "", slug: "" ,keyword:""},{categoryId : 6, name : "", slug: "" ,keyword:""},{categoryId : 7, name : "", slug: "" ,keyword:""}, {categoryId : 8, name : "", slug: "" ,keyword:""},{categoryId : 9, name : "", slug: "" ,keyword:""},{categoryId : 10, name : "", slug: "" ,keyword:""}, {categoryId : 11, name : "", slug: "" ,keyword:""},{categoryId : 12, name : "", slug: "" ,keyword:""},{categoryId : 13, name : "", slug: "" ,keyword:""}, {categoryId : 14, name : "", slug: "" ,keyword:""},{categoryId : 15, name : "", slug: "" ,keyword:""},{categoryId : 16, name : "", slug: "" ,keyword:""}, {categoryId : 17, name : "", slug: "" ,keyword:""},{categoryId : 18, name : "", slug: "" ,keyword:""},{categoryId : 19, name : "", slug: "" ,keyword:""}, {categoryId : 20, name : "", slug: "" ,keyword:""},{categoryId : 21, name : "", slug: "" ,keyword:""},{categoryId : 22, name : "", slug: "" ,keyword:""}, {categoryId : 23, name : "", slug: "" ,keyword:""},{categoryId : 24, name : "", slug: "" ,keyword:""},{categoryId : 25, name : "", slug: "" ,keyword:""}, {categoryId : 26, name : "", slug: "" ,keyword:""},{categoryId : 27, name : "", slug: "" ,keyword:""},{categoryId : 28, name : "", slug: "" ,keyword:""}, {categoryId : 29, name : "", slug: "" ,keyword:""},{categoryId : 30, name : "", slug: "" ,keyword:""},{categoryId : 31, name : "", slug: "" ,keyword:""}, {categoryId : 32, name : "", slug: "" ,keyword:""},{categoryId : 33, name : "", slug: "" ,keyword:""},{categoryId : 34, name : "", slug: "" ,keyword:""}, {categoryId : 35, name : "", slug: "" ,keyword:""},{categoryId : 36, name : "", slug: "" ,keyword:""},{categoryId : 37, name : "", slug: "" ,keyword:""}, {categoryId : 38, name : "", slug: "" ,keyword:""},{categoryId : 39, name : "", slug: "" ,keyword:""},{categoryId : 40, name : "", slug: "" ,keyword:""}, {categoryId : 41, name : "", slug: "" ,keyword:""},{categoryId : 42, name : "", slug: "" ,keyword:""},{categoryId : 43, name : "", slug: "" ,keyword:""}, {categoryId : 44, name : "", slug: "" ,keyword:""},{categoryId : 45, name : "", slug: "" ,keyword:""},{categoryId : 46, name : "", slug: "" ,keyword:""}, {categoryId : 47, name : "", slug: "" ,keyword:""},{categoryId : 48, name : "", slug: "" ,keyword:""},{categoryId : 49, name : "", slug: "" ,keyword:""}, {categoryId : 50, name : "", slug: "" ,keyword:""},{categoryId : 51, name : "", slug: "" ,keyword:""},{categoryId : 52, name : "", slug: "" ,keyword:""}, {categoryId : 53, name : "", slug: "" ,keyword:""},{categoryId : 54, name : "", slug: "" ,keyword:""},{categoryId : 55, name : "", slug: "" ,keyword:""} ];
+         {categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:""},
+ {categoryId : 1, name : "Hospital", slug: "hospital",keyword:"hospital" },
+ {categoryId : 2, name : "Airport", slug: "airport",keyword:"airport"},
+ {categoryId : 3, name : "Amusement Park", slug: "amusement_park" ,keyword:"amusement_park"},
+{categoryId : 4, name : "Travel Agency", slug: "travel_agency" ,keyword:"travel_agency"},
+{categoryId : 5, name : "Art Gallery", slug: "art_gallery" ,keyword:"art_gallery"},
+{categoryId : 6, name : "Atm", slug: "atm" ,keyword:"atm"},
+{categoryId : 7, name : "Zoo", slug: "zoo" ,keyword:"zoo"}, 
+{categoryId : 8, name : "Bank", slug: "bank" ,keyword:"bank"},
+{categoryId : 9, name : "Bar", slug: "bar" ,keyword:" bar"},
+{categoryId : 10, name : "Beauty Saloon", slug: "beauty_salon" ,keyword:"beauty_salon"},
+{categoryId : 11, name : "Bowling Alley", slug: "bowling_alley" ,keyword:"bowling_alley"},
+{categoryId : 12, name : "Bus Station", slug: "bus_station" ,keyword:"bus_station"},
+{categoryId : 13, name : "Campground", slug: "campground" ,keyword:"campground"},
+{categoryId : 14, name : "Casino", slug: "casino" ,keyword:"casino"},
+{categoryId : 15, name : "Cemetry", slug: "cemetery" ,keyword:"cemetery"},
+{categoryId : 16, name : "Church", slug: "church" ,keyword:"church"},
+{categoryId : 17, name : "City Hall", slug: "city_hall" ,keyword:"city_hall"},
+{categoryId : 18, name : "Court House", slug: "courthouse" ,keyword:"courthouse"},
+{categoryId : 19, name : "Embassy", slug: "embassy" ,keyword:"embassy"},
+{categoryId : 20, name : "Fire Station", slug: "fire_station" ,keyword:"fire_station"},
+{categoryId : 21, name : "Funeral Home", slug: "funeral_home" ,keyword:"funeral_home"},
+{categoryId : 22, name : "Furniture Store", slug: "furniture_store" ,keyword:"furniture_store"},
+{categoryId : 23, name : "Gas Station", slug: "gas_station" ,keyword:"gas_station"},
+{categoryId : 24, name : "Gym", slug: "gym" ,keyword:"gym"},
+{categoryId : 25, name : "Hair Care", slug: "hair_care" ,keyword:"hair_care"},
+{categoryId : 26, name : "Hindu Temple", slug: "hindu_temple" ,keyword:"hindu_temple"},
+{categoryId : 27, name : "Real Estate Agency", slug: "real_estate_agency" ,keyword:"real_estate_agency"},
+{categoryId : 28, name : "Laundry", slug: "laundry" ,keyword:"laundry"},
+{categoryId : 29, name : "Library", slug: "library" ,keyword:"library"},
+{categoryId : 30, name : "Liquor Store", slug: "liquor_store" ,keyword:"liquor_store"},
+{categoryId : 31, name : "Lock Smith", slug: "locksmith" ,keyword:"locksmith"},
+{categoryId : 32, name : "Masjid", slug: "mosque" ,keyword:"mosque"},
+{categoryId : 33, name : "Veterinary Care", slug: "veterinary_care" ,keyword:"veterinary_care"},
+{categoryId : 34, name : "Movie Theater", slug: "movie_theater" ,keyword:"movie_theater"},
+{categoryId : 35, name : "Museum", slug: "museum" ,keyword:"museum"},
+{categoryId : 36, name : "Night Club", slug: "night_club" ,keyword:"night_club"},
+{categoryId : 37, name : "Park", slug: "park" ,keyword:"park"},
+{categoryId : 38, name : "Pet Store", slug: "pet_store" ,keyword:"pet_store"},
+{categoryId : 39, name : "University", slug: "university" ,keyword:"university"},
+{categoryId : 40, name : "Physiotherapist", slug: "physiotherapist" ,keyword:"physiotherapist"},
+{categoryId : 41, name : "Post Office", slug: "post_office" ,keyword:"post_office"},
+{categoryId : 42, name : "School", slug: "school" ,keyword:"school"},
+{categoryId : 43, name : "Shopping Mall", slug: "shopping_mall" ,keyword:"shopping_mall"},
+{categoryId : 44, name : "Spa", slug: "spa" ,keyword:"spa"},
+{categoryId : 45, name : "Stadium", slug: "stadium" ,keyword:"stadium"},
+{categoryId : 46, name : "Train Station", slug: "train_station" ,keyword:"train_station"}
+];
 
             $scope.selectedPlace= angular.copy($scope.choosePlace[0]);
 
@@ -752,7 +882,7 @@ for(var i=0;i<keyWords.length;i++){
     
 
 
-          event.preventDefault();
+          //event.preventDefault();
        
       if (navigator.geolocation) {
 navigator.geolocation.getCurrentPosition(function(position) {
@@ -867,8 +997,7 @@ console.log(store);
     
     }
        else{
-
-        alert("Not Found");
+       alert("Not Found");
        }
 
 
@@ -1027,10 +1156,10 @@ $scope.mapItem=true;
 $scope.mymap=false;
 $scope.mylist=true;
   }
-     
+
        
 
-google.maps.event.addDomListener(window, 'load', initialize);
+
 
   
 }]);
