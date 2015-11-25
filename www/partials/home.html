@@ -50,6 +50,7 @@
             
           
                <div id="map-canvas" class="map rounded item size" data-tap-disabled="true" ng-show="mapItem"></div>
+               <div id="map-canvas1"  ng-show="mapIt"></div>
                 <button class="button button-calm button-full" ng-show="mymap" ng-click="showMap(store)">Show in Map</button>
                
                 <button class="button button-calm button-full" ng-show="mylist"  ng-click="showList()">Show in List</button>
@@ -102,6 +103,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Automotive Category</h1>
+     <i ng-click="closeModals(1)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">
@@ -119,6 +121,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Education & Sports Category</h1>
+           <i ng-click="closeModals(2)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">
@@ -137,6 +140,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Restaurant And Foods Category</h1>
+           <i ng-click="closeModals(3)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">
@@ -154,6 +158,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Men Category</h1>
+           <i ng-click="closeModals(4)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">
@@ -171,6 +176,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Women Category</h1>
+           <i ng-click="closeModals(5)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">
@@ -192,6 +198,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Kids Category</h1>
+           <i ng-click="closeModals(6)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">
@@ -209,6 +216,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">General Items Category</h1>
+           <i ng-click="closeModals(7)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">
@@ -225,6 +233,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">House Hold & Tech. Category</h1>
+           <i ng-click="closeModals(8)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">
@@ -244,6 +253,7 @@
   <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Place Category</h1>
+           <i ng-click="closeModals(9)" class="ion-ios-close" style="font-size:35px"></i>
     </ion-header-bar>
     <ion-content>
        <label class="item item-input item-select">

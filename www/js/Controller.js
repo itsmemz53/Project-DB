@@ -373,8 +373,8 @@ $window.location.reload(true);
     
 }]).controller('Maps', ['$scope', 'myService','$state','$location','$ionicModal','$window', function ($scope, myService,$state,$location,$ionicModal,$window) {
   var map;
-       initialize();
-
+       initialize2();
+       $scope.mapIt=false;
     $scope.doRefresh = function() {
 $window.location.reload(true);
        // Stop the ion-refresher from spinning
@@ -474,6 +474,53 @@ $scope.categoriesMap=true;
           else if(myid==9){
             console.log("Me yaha hu",myid);
             $scope.modal9.show()
+          }
+         }
+         $scope.closeModals=function(myid){
+           if(myid==1){
+        $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+
+             $scope.modal1.hide();
+          }
+          else if(myid==2){
+       $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+              $scope.modal2.hide();
+          }
+           else if(myid==3)
+          {
+         
+  $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+              $scope.modal3.hide();
+          }
+           else if(myid==4)
+          {
+ $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+              $scope.modal4.hide();
+          }
+          else if(myid==5)
+          {
+    
+ $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+             $scope.modal5.hide();
+          }
+           else if(myid==6){
+  
+ $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+            $scope.modal6.hide();
+          }
+           else if(myid==7){
+     
+             $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+            $scope.modal7.hide();
+          }
+           else if(myid==8){
+      
+             $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+            $scope.modal8.hide();
+          }
+          else if(myid==9){
+   $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
+            $scope.modal9.hide();
           }
          }
   $scope.closeModal=function(myid,index){
@@ -828,58 +875,37 @@ $ionicModal.fromTemplateUrl('kids-modal.html', {
 var boo=0;
 
 var nowShow=false;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 $scope.mapItem=false;
-myService.sendProducts().success(function(res){
-  if(res==true){
-    console.log("done");
-  }
-});
 
-
-function initialize() {
+function initialize1() {
   var pyrmont;
  var mapOptions
 var ind=null;
                  console.log("here")
-                // console.log(store);
-/*var Keyword=store.toLowerCase();
-for(var i=0;i<keyWords.length;i++){
-    if(keyWords[i].search(Keyword)!= -1){
-        ind=i;
-        break;
+          //event.preventDefault();
+       
+      if (navigator.geolocation) {
+map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
+          var request = {
+            location: pos,
+            radius: 1000,
+            types: [gKey]
+            };
+           ind=null;  
+          var service = new google.maps.places.PlacesService(map);
+          service.nearbySearch(request, callback);
+
+    } else {
+        // Browser doesn't support Geolocation
+        alert("Please Open Your GPS");
+        handleNoGeolocation(false);
     }
-}*/
-
-    
-
-
+}
+function initialize2() {
+  var pyrmont;
+ var mapOptions
+var ind=null;
+                 console.log("here")
           //event.preventDefault();
        
       if (navigator.geolocation) {
@@ -905,18 +931,94 @@ navigator.geolocation.getCurrentPosition(function(position) {
                 zoom: 15,
                mapTypeId: google.maps.MapTypeId.ROADMAP
               };
- map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
-             infowindow = new google.maps.InfoWindow({
+
+     
+            
+        });
+
+
+    } else {
+        // Browser doesn't support Geolocation
+        alert("Please Open Your GPS");
+        handleNoGeolocation(false);
+    }
+}
+
+function callback(results, status,pagination) {
+  
+           
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+      createMarker(results);
+
+
+  }
+}
+
+var myMarker=[];
+var store;
+function createMarker(places) {
+  $scope.places=null;
+   var bounds = new google.maps.LatLngBounds();
+   for (var i = 0, place; place = places[i]; i++) {
+  var image = {
+      url: place.icon,
+      size: new google.maps.Size(71, 71),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(25, 25)
+    };
+  var marker = new google.maps.Marker({
+    map: map,
+    location : pos,
+    title:place.name,
+    position: place.geometry.location,
+     icon: image
+  });
+  
+   bounds.extend(place.geometry.location);
+}
+console.log("Here is places",places);
+  $scope.extras=places;
+ map.fitBounds(bounds);
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+ 
+    infowindow.open(map, this);
+
+  });
+     var marker1 = new google.maps.Marker({
+            position: pos,
+            icon: "img/ambulance1.png"
+              });
+     infowindow = new google.maps.InfoWindow({
                 map: map,
                 position: pos,
                 
             });
-           
-  
-       
-        });
+            
+              infowindow.setContent("Me");
+              marker1.setMap(map);
+  map.setCenter(pos);
+map.setZoom(15);
+}
 
-$scope.searchThis=function(store){
+   $scope.showMap=function() {
+
+   show2();
+
+  } 
+function show2(){
+ console.log("call hua")
+    $scope.Results=false;
+    $scope.categoriesMap=false;
+$scope.mapItem=true;
+$scope.mymap=false;
+$scope.mylist=true;
+}
+
+function clickone(store){
+  //initialize1();
 
 var searchResult=[];
 console.log(store);
@@ -925,28 +1027,12 @@ console.log(store);
   if(globalCat==null && mapCat==null){
     alert("Please Choose Category");
   }
+  if(store==null && $scope.searchFor==true){
+    alert("Please input your search");
+  }
        else{
 $scope.mymap=true;
-           console.log("This is the keyword",gKey);
-              var marker1 = new google.maps.Marker({
-            position: pos,
-            icon: "img/ambulance1.png"
-              });
-              infowindow.setContent("Me");
-              marker1.setMap(map);
-             map.setCenter(pos);
-            map.setZoom(15);
         
-             var request = {
-            location: pos,
-            radius: 1000,
-            types: [gKey]
-            };
-           ind=null;
-        infowindow = new google.maps.InfoWindow();
-  
-          var service = new google.maps.places.PlacesService(map);
-          service.nearbySearch(request, callback);
         if(mapCat == null){
         console.log(globalCat);
   var myObj={search:store , category : globalCat, lat:slat, lon:slong};
@@ -985,28 +1071,16 @@ $scope.mymap=true;
         _id:shopid[index]
     }
   });
-
-
-    console.log(myData);
+  console.log(myData);
     $scope.categoriesMap=false;
        $scope.places=myData;
-     
-      
-
-      //createMarkers(res);
-
-    
-       
 });
 
-    
     }
        else{
        alert("Not Found");
        }
-
-
-      });
+});
     }
     else{
        var myObj={search:store , category : mapCat, lat:slat, lon:slong};
@@ -1042,116 +1116,24 @@ $scope.mymap=true;
     }
   });
 
-
-    console.log(myData);
+ console.log(myData);
     $scope.categoriesMap=false;
        $scope.places=myData;
      
-      
-
-      //createMarkers(res);
-
-    
-       
 });
 
     }
+
      if(boo==1){
+       initialize1();
   $scope.Results=true;
  }
-
-
+}
 }
 
-
-
-
-},function() {
-            handleNoGeolocation(true);
-        };
-    } else {
-        // Browser doesn't support Geolocation
-        alert("Please Open Your GPS");
-        handleNoGeolocation(false);
-    }
+$scope.searchThis=function(store1){
+  initialize1();
+  store=store1;
+clickone(store);
 }
-
-function callback(results, status,pagination) {
-  
-           
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-      createMarker(results);
-
-
-  }
-}
-
-var myMarker=[];
-
-function createMarker(places) {
-  $scope.places=null;
-   var bounds = new google.maps.LatLngBounds();
-   for (var i = 0, place; place = places[i]; i++) {
-  var image = {
-      url: place.icon,
-      size: new google.maps.Size(71, 71),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(25, 25)
-    };
-  var marker = new google.maps.Marker({
-    map: map,
-    location : pos,
-    title:place.name,
-    position: place.geometry.location,
-     icon: image
-  });
-  
-   bounds.extend(place.geometry.location);
-}
-console.log("Here is places",places);
-  $scope.extras=places;
- map.fitBounds(bounds);
-
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
- 
-    infowindow.open(map, this);
-
-  });
-  map.setCenter(pos);
-map.setZoom(15);
-}
-
-   $scope.showMap=function() {
-
-    console.log("call hua")
-    $scope.Results=false;
-    $scope.categoriesMap=false;
-$scope.mapItem=true;
-$scope.mymap=false;
-$scope.mylist=true;
-  }
-
-       
-
-
-
-  
 }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
