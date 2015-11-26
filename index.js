@@ -1,5 +1,6 @@
 var exports = module.exports = {};
 var express = require('express')
+    , cors = require('cors')
     , passport = require('passport')
     , util = require('util')
     , LocalStrategy = require('passport-local').Strategy;
@@ -47,7 +48,7 @@ function findById(id, fn) {
 var app = express();
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
-
+//app.use(cors());
 // configure Express
 app.use(cookieParser());
 //app.use(express.methodOverride());
@@ -407,7 +408,7 @@ app.post('/searchIt', function (req, res) {
                     flag=1;
                     k=co+1;
                 }
-                if(searchIt(search,str)==true){
+                else if(searchIt(search,str)==true){
                     flag=1;
                     k=co+1;
                 }
@@ -432,6 +433,8 @@ var shop;
 
 app.post('/getShop', function (req, res) {
     var cou=0;
+    var slat=0;
+    var slon=0;
     var aray=[];
 var collect=req.body.category+'_Shops';
 shop=collect;
@@ -444,8 +447,12 @@ shop=collect;
             for(var j=0; j<cou;j++){
                 var lat=docs[j].coordinates[1];
                 var lon= docs[j].coordinates[0];
-                var slat=req.body.lat;
-                var slon=req.body.lon;
+                slat=req.body.lat;
+                slon=req.body.lon;
+                if(slat==0){
+
+                }
+                else{
         var ans=geolib.isPointInCircle(
                 {latitude: lat , longitude: lon},
                 {latitude: slat, longitude: slon},
@@ -457,7 +464,7 @@ shop=collect;
                     aray.push(objec);
                     console.log(j ,"   ",objec);
                 }
-
+            }
             }
            res.send(aray);
 
@@ -476,6 +483,7 @@ shop=collect;
 
     
 });
+
 
 
 app.post('/shopProfile',function(req,res){
@@ -514,6 +522,12 @@ app.get('/getShop/*', function (req, res) {
             collection.findOne({ShopId:abc},{},function(e,result){
                 if(result){
                     var obj={Shop: docs, Review:result.Review};
+                    console.log('Sending',obj);
+                    res.send(obj);
+                }
+                else{
+                     var obj={Shop: docs, Review:"No_Review"};
+                    console.log('Sending',obj);
                     res.send(obj);
                 }
 

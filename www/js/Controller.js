@@ -181,21 +181,21 @@ angular.module('dbProject.controllers', [])
        Washing: false, Books: false,
        fitnessEquipments: false, Stationary: false,
        sportsWear: false, sportsAccesories: false,Cafe: false, chaatGolaShop: false,Dhaba: false, Coconut: false,
-
+       frenchFries : false,
        Restaurants: false, Soup: false,gentGarments: false, Watches: false,gentsUnderGarments: false, gentShoes: false,
        Perfume: false, eyeWear: false,ladiesGarments: false, ladiesUnderGarments: false,ladiesShoes: false, Cosmetics: false,
        artificialJewelery: false, handBag_purse_keyChain: false,kidGarments: false, kidShoes: false,babyProducts: false, Toys: false,
        Groceries: false, Sweets: false,Vegetables: false, bakery: false,Fruits: false, pharmacy: false,
        aquarium: false, movieGames: false,Gifts: false, dairyProduct: false,Tobacco: false, mobileCards: false,
        Computer: false, electronicAppliances: false,electricItems: false, Furniture: false,Hardware: false, Paints: false,
-       Sanitary: false, Mobile: false,
-
-
-       gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
-       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
-       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
-       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
-       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false};
+       Sanitary: false, Mobile: false,hospital: false, airport: false,amusement_park: false, travel_agency: false,
+       art_gallery : false, atm: false,zoo: false, bank: false,bar: false, beauty_salon: false,
+       bowling_alley: false, bus_station: false,campground: false, casino: false,cemetery: false, church: false,
+       city_hall: false, courthouse: false,embassy: false, fire_station: false,furniture_store: false, gas_station: false,
+       gym: false, hair_care: false,hindu_temple: false, real_estate_agency: false,laundry: false,   library: false, liquor_store: false,locksmith: false, mosque: false,
+       veterinary_care: false, movie_theater: false,museum: false, night_club: false,park: false, pet_store: false,
+       university: false, physiotherapist: false,post_office: false, school: false,shopping_mall: false, spa: false,
+       stadium: false, train_station: false ,caterers : false};
 var cat=[];
  $scope.stepsModel = [];
 
@@ -211,8 +211,8 @@ var cat=[];
             $scope.stepsModel.push(e.target.result);
         });
     }
-  $scope.SendShop=function(){
-
+  $scope.SendShop=function(shopName,shopArea,shopAddr,shopLong,shopLat){
+console.log(shopName,shopArea,shopAddr,shopLong,shopLat);
  var j=0
  for(var d in $scope.colors){
   if($scope.colors[d] == true)
@@ -226,7 +226,7 @@ var cat=[];
 
 
          for(var as=0;as<cat.length;as++){
-  var obj={shopName:$scope.shopName,shopAddr:$scope.shopAddr, shopArea:$scope.shopArea,shopLong:$scope.shopLong, shopLat:$scope.shopLat, category:cat[as], shopCover:$scope.stepsModel[0]};
+  var obj={shopName:shopName,shopAddr:shopAddr, shopArea:shopArea,shopLong:shopLong, shopLat:shopLat, category:cat[as], shopCover:$scope.stepsModel[0]};
       myService.sendShop(obj).success(function(res){
         if (res == true) {
               console.log("submitted");
@@ -243,29 +243,30 @@ var cat=[];
     $scope.shopLat='';
     $scope.stepsModel[0]='';
     $scope.imageIsLoaded='';
- $scope.colors = {autoParts: false, Batteries: false,Electronics: false, bicyleShop: false,
+         $scope.colors = {autoParts: false, Batteries: false,Electronics: false, bicyleShop: false,
          bikeShop: false, carShop: false,
        Rental: false, showRooms: false,
        Washing: false, Books: false,
        fitnessEquipments: false, Stationary: false,
        sportsWear: false, sportsAccesories: false,Cafe: false, chaatGolaShop: false,Dhaba: false, Coconut: false,
-
+       frenchFries : false,
        Restaurants: false, Soup: false,gentGarments: false, Watches: false,gentsUnderGarments: false, gentShoes: false,
        Perfume: false, eyeWear: false,ladiesGarments: false, ladiesUnderGarments: false,ladiesShoes: false, Cosmetics: false,
        artificialJewelery: false, handBag_purse_keyChain: false,kidGarments: false, kidShoes: false,babyProducts: false, Toys: false,
        Groceries: false, Sweets: false,Vegetables: false, bakery: false,Fruits: false, pharmacy: false,
        aquarium: false, movieGames: false,Gifts: false, dairyProduct: false,Tobacco: false, mobileCards: false,
        Computer: false, electronicAppliances: false,electricItems: false, Furniture: false,Hardware: false, Paints: false,
-       Sanitary: false, Mobile: false,
+       Sanitary: false, Mobile: false,hospital: false, airport: false,amusement_park: false, travel_agency: false,
+       art_gallery : false, atm: false,zoo: false, bank: false,bar: false, beauty_salon: false,
+       bowling_alley: false, bus_station: false,campground: false, casino: false,cemetery: false, church: false,
+       city_hall: false, courthouse: false,embassy: false, fire_station: false,furniture_store: false, gas_station: false,
+       gym: false, hair_care: false,hindu_temple: false, real_estate_agency: false,laundry: false,   library: false, liquor_store: false,locksmith: false, mosque: false,
+       veterinary_care: false, movie_theater: false,museum: false, night_club: false,park: false, pet_store: false,
+       university: false, physiotherapist: false,post_office: false, school: false,shopping_mall: false, spa: false,
+       stadium: false, train_station: false ,caterers : false};
 
-
-       gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
-       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
-       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
-       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false, Coconut: false,
-       Restaurants: false, Soup: false,gentGarments: false, gentsUnderGarments: false,gentShoes: false};
 }
-}]).controller('getDetails', ['$scope', 'myService', '$stateParams', '$location','$window','$state',function ($scope, myService,$stateParams,$location,$window,$state){
+}]).controller('getDetails', ['$scope', 'myService', '$stateParams', '$location','$window',function ($scope, myService,$stateParams,$location,$window){
   //$window.location.reload(true);
  
     $scope.id = $stateParams.id;
@@ -295,9 +296,12 @@ var cat=[];
 
    
     myService.getShopsWithId($scope.id).success(function (res) {
+      console.log("here");
+           console.log(res.Shop);
         $scope.product = res.Shop;
-        $scope.loader=true;
-
+        console.log($scope.product);
+ 
+        if(res.Review !== "No_Review"){
         for(var i in res.Review){
           userId.push(res.Review[i].UserId);
           Review.push(res.Review[i].UserReview);
@@ -313,7 +317,7 @@ var cat=[];
         console.log($scope.product);
         console.log(myData);
         $scope.Reviews=myData;
-
+}
     });
      $scope.hello=function(){
 $window.location.reload(true);
@@ -373,6 +377,7 @@ $window.location.reload(true);
     
 }]).controller('Maps', ['$scope', 'myService','$state','$location','$ionicModal','$window', function ($scope, myService,$state,$location,$ionicModal,$window) {
   var map;
+  $scope.focus=false;
        initialize2();
        $scope.mapIt=false;
     $scope.doRefresh = function() {
@@ -381,7 +386,7 @@ $window.location.reload(true);
        $scope.$broadcast('scroll.refreshComplete');
     
   }
-var infowindow;
+
 var pos;
 var slat=null;
 var slong=null;
@@ -392,7 +397,7 @@ $window.location.reload(true);
  }
 var globalCat=null;
 var mapCat=null;
-$scope.mylist=false;
+//$scope.mylist=false;
 $scope.mymap=false;
 $scope.categoriesMap=true;
      $scope.colors = {artificialJewelery: false, Accessories: false,Electronics: false, bedSheetNTowel: false,
@@ -407,7 +412,7 @@ $scope.categoriesMap=true;
         {categoryId : 0, name : "Choose Category", slug: "Choose Category" },
         {categoryId : 1, name : "Automotive", slug: "Automotive" },
         {categoryId : 2, name : "Education & Sports", slug: "Education"},
-        {categoryId : 3, name : "Restaurant And Foods", slug: "restaurant_Foods"},{categoryId : 4, name : "Men", slug: "Men"},
+        {categoryId : 3, name : "Restaurant And Food", slug: "restaurant_Foods"},{categoryId : 4, name : "Men", slug: "Men"},
         {categoryId : 5, name : "Women", slug: "Women"},{categoryId : 6, name : "Kids", slug: "Kids"},
         {categoryId : 7, name : "General Items", slug: "generalItems"},{categoryId : 8, name : "House Hold & Tech.", slug: "houseHoldGoods"},
         {categoryId : 9, name : "Places", slug: "Places"}    ];
@@ -417,6 +422,7 @@ $scope.categoriesMap=true;
     $scope.mapItem=false;
     $scope.Results=true;
     $scope.mymap=true;
+     $scope.focus=false;
     $scope.mylist=false;
   }
          $scope.selectedCategories = angular.copy($scope.chooseCategories[0]);
@@ -967,39 +973,63 @@ function createMarker(places) {
       anchor: new google.maps.Point(17, 34),
       scaledSize: new google.maps.Size(25, 25)
     };
+    var contentString = '<div>'+
+      '<div>'+
+      '</div>'+
+      '<h3>'+ place.name+'</h3>'+
+      '<div>'+
+      '<p></br></br><strong>For delivery:</strong> </br> Call Now: +923332571546 </p>'+
+      '</div>'+
+      '</div>';
+      var infowindow = new google.maps.InfoWindow({
+    content: contentString,
+    maxWidth: 200
+  });
   var marker = new google.maps.Marker({
     map: map,
     location : pos,
     title:place.name,
     position: place.geometry.location,
-     icon: image
+     icon: "img/g.png"
   });
   
    bounds.extend(place.geometry.location);
+          marker.addListener('click', function() {
+           infowindow.open(map, marker);
+            });
 }
 console.log("Here is places",places);
   $scope.extras=places;
- map.fitBounds(bounds);
-
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
  
-    infowindow.open(map, this);
 
-  });
+
+
+
+
      var marker1 = new google.maps.Marker({
             position: pos,
-            icon: "img/ambulance1.png"
+            icon: "img/ic.png",
+            animation: google.maps.Animation.DROP
               });
-     infowindow = new google.maps.InfoWindow({
+     var infowindow1 = new google.maps.InfoWindow({
                 map: map,
                 position: pos,
                 
             });
-            
-              infowindow.setContent("Me");
+            marker1.addListener('click', toggleBounce);
+              infowindow1.setContent("Me");
               marker1.setMap(map);
-  map.setCenter(pos);
+             map.setCenter(pos);
+             map.fitBounds(bounds);
+
+function toggleBounce() {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+
 map.setZoom(15);
 }
 
@@ -1011,14 +1041,18 @@ map.setZoom(15);
 function show2(){
  console.log("call hua")
     $scope.Results=false;
-    $scope.categoriesMap=false;
-$scope.mapItem=true;
-$scope.mymap=false;
-$scope.mylist=true;
+    $scope.mapItem=true;
+    $scope.mylist=true;
+    $scope.mymap=false;
+
+/*    $scope.categoriesMap=false;
+
+
+*/
 }
 
 function clickone(store){
-  //initialize1();
+ // initialize1();
 
 var searchResult=[];
 console.log(store);
@@ -1027,13 +1061,15 @@ console.log(store);
   if(globalCat==null && mapCat==null){
     alert("Please Choose Category");
   }
+  else{
   if(store==null && $scope.searchFor==true){
     alert("Please input your search");
   }
        else{
-$scope.mymap=true;
+
         
         if(mapCat == null){
+          if(store.length > 2){
         console.log(globalCat);
   var myObj={search:store , category : globalCat, lat:slat, lon:slong};
   var shopname=[];
@@ -1044,10 +1080,14 @@ $scope.mymap=true;
        myService.sendSearch(myObj).success(function(res){
   if(res==true){
     console.log("itemFound");
-
+$scope.mapItem=true;
+   $scope.Results=false;
+    $scope.mymap=false;
+     $scope.mylist=true;
     myService.getShop(myObj).success(function(res){
-    boo=1;
-      $scope.mapItem=false;
+
+    
+
       for(var i in res){
         shopname.push(res[i].shopName);
         shoparea.push(res[i].shopArea);
@@ -1081,7 +1121,11 @@ $scope.mymap=true;
        alert("Not Found");
        }
 });
+}
+else
+ alert("Not Found");
     }
+
     else{
        var myObj={search:store , category : mapCat, lat:slat, lon:slong};
        var shopname=[];
@@ -1090,8 +1134,10 @@ $scope.mymap=true;
   var shopcategory=[];
   var shopid=[];
  myService.getShop(myObj).success(function(res){
-      $scope.Results=true;
-      $scope.mapItem=false;
+   $scope.mapItem=true;
+   $scope.Results=false;
+    $scope.mymap=false;
+     $scope.mylist=true;
       for(var i in res){
         shopname.push(res[i].shopName);
         shoparea.push(res[i].shopArea);
@@ -1102,6 +1148,7 @@ $scope.mymap=true;
          var myLl = new google.maps.LatLng(res[i].shopLat, res[i].shopLong);
         var marker = new google.maps.Marker({
         position: myLl,
+        icon:"img/l.png",
        title:res[i].shopName
       });
       marker.setMap(map);
@@ -1123,17 +1170,24 @@ $scope.mymap=true;
 });
 
     }
+  }
+}
+}
+var dk=0;
 
-     if(boo==1){
-       initialize1();
-  $scope.Results=true;
- }
-}
-}
+   
+
+
 
 $scope.searchThis=function(store1){
+   $scope.Results=false;
+    $scope.mymap=false;
+     $scope.focus=true;
+dk=1;
+
   initialize1();
   store=store1;
 clickone(store);
+
 }
 }]);

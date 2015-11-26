@@ -20,9 +20,7 @@
 .item-center{
     text-align: center;
 }
-.background, .background .pane, .background .item, .background .item-complex .item-content .col{
 
-}
 .item{
     font-family: cursive;
     font-color:rgba(15, 159, 180,1.8);
