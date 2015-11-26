@@ -29,13 +29,14 @@
 				<p>{{product.shopArea}}</p>
 				<p>{{product.shopAddr}}</p>
 				<label class="item item-input">
+					
 					<textarea rows="4" cols="50" name="review" ng-model="review" placeholder="Your Review Please ....">
 						</textarea>
 				</label>
-				<button class="button button-large button-block button-royal" style="font-size:20px" ng-click="SendDetails(product)">
+				<button class="button button-large button-block button-royal" style="font-size:20px" ng-click="SendDetails(product,review)">
 					<i class="ion-eye" style="font-size:35px">&nbsp;</i>Add A Review
 				</button>
-
+		
 	
 			<div class="item" ng-repeat="Review in Reviews" >
 				<h3>{{Review.name}}</h3>
@@ -51,10 +52,10 @@
 
     <ion-list >
      <a  ng-click="hello()" ng-href="/#/home"> <ion-item nav-clear menu-toggle>  <h3> Home <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item></a>
-      <ion-item nav-clear menu-toggle>  <h3>  Top Ten Shops <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
-      <ion-item nav-clear menu-toggle>  <h3>  Most Searched Items <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
-      <ion-item nav-clear menu-toggle>  <h3>  Your Wishlist <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
-
+        <a ng-click="hello()" ng-href="/#/userReviews" > <ion-item nav-clear menu-toggle>  <h3>  Your Reviews <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item></a>
+      <ion-item nav-clear menu-toggle>  <h3>  Recommended Shops<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+      <ion-item nav-clear menu-toggle>  <h3>  About Us<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+            <ion-item nav-clear menu-toggle>  <h3>  Logout<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
          </ion-list>
     </ion-side-menu>
   </ion-side-menus>

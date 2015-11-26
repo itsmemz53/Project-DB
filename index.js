@@ -178,6 +178,7 @@ app.post('/register', function (req, res) {
 app.post('/Review', function (req, res) {
     var collection =db.get('User_Reviews');
     var review= req.body.review;
+    console.log('Ye hai review',review);
     var Shop =req.body.Shop;
           var dateObj = new Date();
 var month = dateObj.getUTCMonth() + 1; //months from 1-12

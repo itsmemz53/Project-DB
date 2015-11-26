@@ -274,15 +274,15 @@ console.log(shopName,shopArea,shopAddr,shopLong,shopLat);
     var userId=[];
     var Review=[];
     var myDate=[];
-    $scope.SendDetails = function(Product){
+    $scope.SendDetails = function(Product,review){
         console.log(Product);
-        console.log($scope.review);
+        console.log("Ye review hai",review);
     
-        var myobject={review : $scope.review , Shop : Product};
+        var myobject={review : review , Shop : Product};
          myService.sendReview(myobject).success(function (res) {
           if(res==true){
             alert("Your Review Added");
-            $scope.review="";
+
            $window.location.reload(true);
           }
           else{
@@ -1152,11 +1152,18 @@ $scope.mapItem=true;
         position: myLl,
        title:res[i].shopName
       });
-     
+     marker.addListener('click', toggleBounce);
        marker.addListener('click', function() {
            infowindow.open(map, marker);
             });
     }
+    function toggleBounce() {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
      var myData = shopname.map(function(value, index) {
     return {
         name: value,
@@ -1199,13 +1206,37 @@ else
         shopcover.push(res[i].shopCover);
         shopcategory.push(res[i].categoryName);
         shopid.push(res[i]._id);
-
+var contentString = '<div>'+
+      '<div>'+
+      '</div>'+
+      '<h3>'+ shopname[i]+'</h3>'+
+      '<div>'+
+      '<p></br></br><strong>For delivery:</strong> </br> Call Now: +923332571546 </p>'+
+      '</div>'+
+      '</div>';
+      var infowindow = new google.maps.InfoWindow({
+    content: contentString,
+    maxWidth: 200
+  });
+ 
+      
          var myLl = new google.maps.LatLng(res[i].shopLat, res[i].shopLong);
         var marker = new google.maps.Marker({
         position: myLl,
         icon:"img/l.png",
        title:res[i].shopName
       });
+             marker.addListener('click', toggleBounce);
+         marker.addListener('click', function() {
+           infowindow.open(map, marker);
+            });
+            function toggleBounce() {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
       marker.setMap(map);
     }
      var myData = shopname.map(function(value, index) {
