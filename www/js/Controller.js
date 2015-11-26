@@ -883,15 +883,18 @@ var boo=0;
 var nowShow=false;
 $scope.mapItem=false;
 
+
+
+
 function initialize1() {
   var pyrmont;
  var mapOptions
 var ind=null;
                  console.log("here")
           //event.preventDefault();
-       
+         map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
       if (navigator.geolocation) {
-map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
+
           var request = {
             location: pos,
             radius: 1000,
@@ -899,6 +902,7 @@ map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
             };
            ind=null;  
           var service = new google.maps.places.PlacesService(map);
+          console.log("menesend kia");
           service.nearbySearch(request, callback);
 
     } else {
@@ -907,6 +911,11 @@ map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions );
         handleNoGeolocation(false);
     }
 }
+
+
+
+
+
 function initialize2() {
   var pyrmont;
  var mapOptions
@@ -950,29 +959,62 @@ navigator.geolocation.getCurrentPosition(function(position) {
     }
 }
 
+
+
+
+
 function callback(results, status,pagination) {
-  
+  console.log(status);
            
   if (status == google.maps.places.PlacesServiceStatus.OK) {
+    console.log("me yaha per aya");
       createMarker(results);
 
 
   }
+  else{
+    showMe();
+
+  }
 }
 
+function showMe(){
+
+   var bounds = new google.maps.LatLngBounds();
+
+       var marker1 = new google.maps.Marker({
+            position: pos,
+            icon: "img/ic.png",
+            animation: google.maps.Animation.DROP
+              });
+     var infowindow1 = new google.maps.InfoWindow({
+                map: map,
+                position: pos,
+                
+            });
+      
+              infowindow1.setContent("Me");
+              marker1.setMap(map);
+             map.setCenter(pos);
+                bounds.extend(pos);
+          marker1.addListener('click', function() {
+           infowindow1.open(map, marker1);
+            });
+             map.fitBounds(bounds);
+
+
+
+map.setZoom(18);
+
+}
 var myMarker=[];
 var store;
 function createMarker(places) {
+  console.log("me yaha huper");
   $scope.places=null;
    var bounds = new google.maps.LatLngBounds();
    for (var i = 0, place; place = places[i]; i++) {
-  var image = {
-      url: place.icon,
-      size: new google.maps.Size(71, 71),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(25, 25)
-    };
+
     var contentString = '<div>'+
       '<div>'+
       '</div>'+
@@ -1034,7 +1076,6 @@ map.setZoom(15);
 }
 
    $scope.showMap=function() {
-
    show2();
 
   } 
@@ -1094,13 +1135,27 @@ $scope.mapItem=true;
         shopcover.push(res[i].shopCover);
         shopcategory.push(res[i].categoryName);
         shopid.push(res[i]._id);
-
+ var contentString = '<div>'+
+      '<div>'+
+      '</div>'+
+      '<h3>'+ shopname[i]+'</h3>'+
+      '<div>'+
+      '<p></br></br><strong>For delivery:</strong> </br> Call Now: +923332571546 </p>'+
+      '</div>'+
+      '</div>';
+      var infowindow = new google.maps.InfoWindow({
+    content: contentString,
+    maxWidth: 200
+  });
          var myLl = new google.maps.LatLng(res[i].shopLat, res[i].shopLong);
         var marker = new google.maps.Marker({
         position: myLl,
        title:res[i].shopName
       });
-      marker.setMap(map);
+     
+       marker.addListener('click', function() {
+           infowindow.open(map, marker);
+            });
     }
      var myData = shopname.map(function(value, index) {
     return {
@@ -1191,3 +1246,5 @@ clickone(store);
 
 }
 }]);
+
+

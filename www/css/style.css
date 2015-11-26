@@ -17,6 +17,17 @@
 .item-avatar img {
 
 }
+.heading1{
+    color:#E3DAC9;
+    /*position: relative;*/
+    /*top:80px;*/
+    font-family:  cursive;
+    font-size: 35px;
+}
+
+.font-all{
+      font-family:  cursive;
+}
 .item-center{
     text-align: center;
 }
@@ -39,6 +50,11 @@
              height: 300px;
             position: relative;
             width: 100%;
+        }
+        .map {
+             height: 300px;
+            position: relative;
+            width: 30%;
         }
 .size{
     width: 100%;

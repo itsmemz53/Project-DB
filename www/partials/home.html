@@ -28,7 +28,7 @@
            </label>
      
                       <label class="item item-input list-inset " ng-show="searchFor" >
-                  <strong> <input type="text" id="store" ng-model="store" class="store" name="store" placeHolder="Search the World.." required="required"> </strong>
+                  <strong> <input type="text" id="store" ng-model="store" class="store" name="store" placeHolder="Search your Item ..." required="required"> </strong>
                    </label>
                  
                 <label >
@@ -50,8 +50,8 @@
                   
                   
             <button class="button button-calm button-full" ng-show="mylist"  ng-click="showList()">Show in List</button>
-                                <button type="submit" id="button2"  ng-click="searchThis(store)" data-inline="true" class="button button-full button-dark" ng-show="focus"><i class='ion-navigate' style="font-size:20px">&nbsp</i>Navigate Me</button>
-               <div id="map-canvas" class="map rounded item size" data-tap-disabled="true" ng-show="mapItem"></div>
+                               <a> <button type="submit" id="button2"  ng-click="searchThis(store)" data-inline="true" class="button button-full button-dark" ng-show="focus"><i class='ion-navigate' style="font-size:20px" onClick="document.getElementById('map-canvas').scrollIntoView();">&nbsp</i>Navigate Me</button></a>
+               <div id="map-canvas" class="map rounded item size" data-tap-disabled="true" ng-show="mapItem" ></div>
                <div id="map-canvas1"  ng-show="mapIt"></div>
                 <button class="button button-calm button-full" ng-show="mymap" ng-click="showMap(store)">Show in Map</button>
                
@@ -59,25 +59,25 @@
               
                 <div id="results"  class="panel" ng-show="Results">
 
-              <h2>Shops With Profile</h2>
-              <div class="list">
+              <h2 class="heading1">Profiles</h2>
+              <div class="list font-all">
       <div ng-repeat="place in places" >
         <a class="item item-avatar" ng-click="hello()" ng-href='/#/details/{{place._id}}'>
           <img class="product-thumbnail" ng-src={{place.cover}}>
-         <h2 style="font-size:22px">{{place.name}}</h2>
+         <h2 style="font-size:22px" >{{place.name}}</h2>
          <p>{{place.area}}</p>
         </a>
        </div>
           </div>
-             <div>
-              <h2>Extra Shops</h2>
-               <div class="list">
+             
+              <h2 class="heading1">Extra's</h2>
+               <div class="list font-all">
                    <div class="item" ng-repeat="extra in extras" >
                      <h2 style="font-size:22px">{{extra.name}}</h2>
                     </div>
                 </div>
              </div>
-        </div>
+       
           </div>
   </ion-content>
    <ion-footer-bar class="bar-dark">
