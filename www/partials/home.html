@@ -50,7 +50,7 @@
                   
                   
             <button class="button button-calm button-full" ng-show="mylist"  ng-click="showList()">Show in List</button>
-                               <a> <button type="submit" id="button2"  ng-click="searchThis(store)" data-inline="true" class="button button-full button-dark" ng-show="focus"><i class='ion-navigate' style="font-size:20px" onClick="document.getElementById('map-canvas').scrollIntoView();">&nbsp</i>Navigate Me</button></a>
+                               <a> <button type="submit" id="button2"  ng-click="searchThis(store)" data-inline="true" class="button button-full button-dark" ng-show="focus"><i class='ion-navigate' style="font-size:20px" >&nbsp</i>Find Me</button></a>
                <div id="map-canvas" class="map rounded item size" data-tap-disabled="true" ng-show="mapItem" ></div>
                <div id="map-canvas1"  ng-show="mapIt"></div>
                 <button class="button button-calm button-full" ng-show="mymap" ng-click="showMap(store)">Show in Map</button>
@@ -70,13 +70,13 @@
        </div>
           </div>
              
-              <h2 class="heading1">Extra's</h2>
-               <div class="list font-all">
+              
+            
                    <div class="item" ng-repeat="extra in extras" >
                      <h2 style="font-size:22px">{{extra.name}}</h2>
                     </div>
                 </div>
-             </div>
+           
        
           </div>
   </ion-content>
@@ -87,11 +87,10 @@
           <ion-side-menu side="left">
 
     <ion-list >
-     <a  ng-click="hello()" ng-href="/#/home"> <ion-item nav-clear menu-toggle>  <h3> Home <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item></a>
-        <a ng-click="hello()" ng-href="/#/userReviews" > <ion-item nav-clear menu-toggle>  <h3>  Your Reviews <i class="ion-eye" style="font-size:25px"></i> </h3></ion-item></a>
-      <ion-item nav-clear menu-toggle>  <h3>  Recommended Shops<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
-      <ion-item nav-clear menu-toggle>  <h3>  About Us<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
-            <ion-item nav-clear menu-toggle>  <h3>  Logout<i class="ion-eye" style="font-size:25px"></i> </h3></ion-item>
+     <a  ng-click="hello()" ng-href="/#/home" style="text-decoration: none;" target="_self"> <ion-item nav-clear menu-toggle> <h3> <i class="ion-home" style="font-size:25px"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Home  </h3></ion-item></a>
+        <a ng-click="hello()" ng-href="/#/userReviews" style="text-decoration: none;" target="_self"> <ion-item nav-clear menu-toggle>  <h3> <i class="ion-edit" style="font-size:25px"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your Reviews  </h3></ion-item></a>
+    <a  ng-click="hello()" ng-href="/#/about" style="text-decoration: none;" target="_self">  <ion-item nav-clear menu-toggle>  <h3> <i class="ion-information-circled" style="font-size:25px"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; About Us</h3></ion-item></a>
+          <a  ng-click="hello()" ng-href="/#/" style="text-decoration: none;" target="_self">  <ion-item nav-clear menu-toggle>  <h3><i class="ion-power" style="font-size:25px"></i> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Logout </h3></ion-item></a>
 
          </ion-list>
     </ion-side-menu>

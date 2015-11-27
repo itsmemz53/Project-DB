@@ -14,6 +14,7 @@ var S = require('string');
 var fs = require("fs");
 var geolib=require("geolib");
 var FB = require('fb');
+var myarray=['babyProducts','Batteries','beauty_salon','caterers','dairyProduct','Groceries','hospital','laundry','mobileCards','real_estate_agency','Sweets'];
 function findByUsername(username, fn) {
     var collection = db.get('loginUsers');
     console.log("yeh user name hai latest!!", username);
@@ -80,7 +81,7 @@ passport.deserializeUser(function (id, done) {
 
 
 
-var MyUser="GuestUser";
+var MyUser=null;
 var myCat;
 app.set('port', process.env.PORT || 8100);
 passport.use(new LocalStrategy(
@@ -176,8 +177,13 @@ app.post('/register', function (req, res) {
 });
 
 app.post('/Review', function (req, res) {
+    if(MyUser==null){
+        res.send(false);
+    }
+else{
     var collection =db.get('User_Reviews');
     var review= req.body.review;
+    var rating=req.body.rate;
     console.log('Ye hai review',review);
     var Shop =req.body.Shop;
           var dateObj = new Date();
@@ -187,7 +193,7 @@ var year = dateObj.getUTCFullYear();
 
 var newdate = day + "/" + month + "/" + year;
 
- var FreshObj={UserId :MyUser , UserReview: review, date:newdate};
+ var FreshObj={UserId :MyUser , UserReview: review, date:newdate, UserRating:rating};
 var obj={};
 
   collection.findOne({ShopId: Shop._id}, {}, function (e, docs2) {
@@ -252,6 +258,7 @@ else{
 
 }
 });
+}
 
 });
 
@@ -279,6 +286,7 @@ else{
 function addReviewToShop(req,res){
 if(MyUser !== "GuestUser"){
  var collection =db.get('Shop_Reviews');
+   var rating=req.body.rate;
     var review= req.body.review;
     var Shop =req.body.Shop;
     var dateObj = new Date();
@@ -288,7 +296,7 @@ var year = dateObj.getUTCFullYear();
 
 var newdate = day + "/" + month + "/" + year;
 
- var FreshObj={shopId:Shop._id,shopName :Shop.shopName , UserReview: review, date:newdate};
+ var FreshObj={shopId:Shop._id,shopName :Shop.shopName , UserReview: review, date:newdate ,UserRating:rating};
 var obj={};
 
   collection.findOne({UserId: MyUser}, {}, function (e, docs2) {
@@ -486,7 +494,6 @@ shop=collect;
 });
 
 
-
 app.post('/shopProfile',function(req,res){
 
 var collect=req.body.category+'_Shops';
@@ -505,9 +512,12 @@ collection.insert(FreshObj,function(e,docs){
 
 
 });
-
-
 });
+
+
+
+
+
 app.get('/getShop/*', function (req, res) {
     var abc = req.params[0];
  var collect = db.get(shop);

@@ -1,100 +1,4 @@
 var objects={};
-var keyWords=['hospital',
-"airport",
-"amusement_park",
-"aquarium",
-"art_gallery",
-"atm",
-"bakery",
-"bank",
-"bar",
-"beauty_salon",
-"bicycle_store",
-"book_store",
-"bowling_alley",
-"bus_station",
-"cafe",
-"campground",
-"car_dealer",
-"car_rental",
-"car_repair",
-"car_wash",
-"casino",
-"cemetery",
-"church",
-"city_hall",
-"clothing_store",
-"convenience_store",
-"courthouse",
-"dentist",
-"department_store",
-"doctor",
-"electrician",
-"electronics_store",
-"embassy",
-"establishment",
-"finance",
-"fire_station",
-"florist",
-"food",
-"funeral_home",
-"furniture_store",
-"gas_station",
-"general_contractor",
-"grocery_or_supermarket",
-"gym",
-"hair_care",
-"hardware_store",
-"health",
-"hindu_temple",
-"home_goods_store",
-"hospital",
-"insurance_agency",
-"jewelry_store",
-"laundry",
-"lawyer",
-"library",
-"liquor_store",
-"local_government_office",
-"locksmith",
-"lodging",
-"meal_delivery",
-"meal_takeaway",
-"mosque",
-"movie_rental",
-"movie_theater",
-"moving_company",
-"museum",
-"night_club",
-"painter",
-"park",
-"parking",
-"pet_store",
-"pharmacy",
-"physiotherapist",
-"place_of_worship",
-"plumber",
-"police",
-"post_office",
-"real_estate_agency",
-"restaurant",
-"roofing_contractor",
-"rv_park",
-"school",
-"shoe_store",
-"shopping_mall",
-"spa",
-"stadium",
-"storage",
-"store",
-"subway_station",
-"synagogue",
-"taxi_stand",
-"train_station",
-"travel_agency",
-"university",
-"veterinary_care",
-"zoo"]
 angular.module('dbProject.controllers', [])
 .controller('registerUser', ['$scope', 'myService', '$location', '$rootScope', function ($scope, myService, $location, $rootScope, $state) {
     // $rootScope.location = $location.path();
@@ -174,7 +78,13 @@ angular.module('dbProject.controllers', [])
             
 
     });
-}]).controller('shopProfile', ['$scope', 'myService','$location', function ($scope, myService,$location) {   
+}]).controller('shopProfile', ['$scope', 'myService','$location','$window', function ($scope, myService,$location,$window) {   
+     $scope.doRefresh = function() {
+$window.location.reload(true);
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+    
+  }
          $scope.colors = {autoParts: false, Batteries: false,Electronics: false, bicyleShop: false,
          bikeShop: false, carShop: false,
        Rental: false, showRooms: false,
@@ -268,17 +178,34 @@ console.log(shopName,shopArea,shopAddr,shopLong,shopLat);
 }
 }]).controller('getDetails', ['$scope', 'myService', '$stateParams', '$location','$window',function ($scope, myService,$stateParams,$location,$window){
   //$window.location.reload(true);
- 
+    $scope.doRefresh = function() {
+$window.location.reload(true);
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+    
+  }
     $scope.id = $stateParams.id;
     console.log($stateParams);
     var userId=[];
     var Review=[];
     var myDate=[];
-    $scope.SendDetails = function(Product,review){
+        var myrate=[];
+      // set the rate and max variables
+  $scope.rating = 4;
+  $scope.data = {
+    rating : 3,
+    max: 5
+  }
+  
+$scope.$watch('data.rating', function() {
+  console.log('New value: '+$scope.data.rating);
+}); 
+    $scope.SendDetails = function(Product,review,rate){
         console.log(Product);
-        console.log("Ye review hai",review);
+        console.log("Ye review hai",review,rate);
     
-        var myobject={review : review , Shop : Product};
+        var myobject={review : review , Shop : Product,rate:rate};
+
          myService.sendReview(myobject).success(function (res) {
           if(res==true){
             alert("Your Review Added");
@@ -286,7 +213,10 @@ console.log(shopName,shopArea,shopAddr,shopLong,shopLat);
            $window.location.reload(true);
           }
           else{
-            alert("Please try again later")
+            alert("Please Login First ");
+            $location.path("/login");
+            $window.location.reload(true);
+
           }
 
 
@@ -294,7 +224,7 @@ console.log(shopName,shopArea,shopAddr,shopLong,shopLat);
 
     };
 
-   
+   $scope.readOnly = true;
     myService.getShopsWithId($scope.id).success(function (res) {
       console.log("here");
            console.log(res.Shop);
@@ -306,17 +236,28 @@ console.log(shopName,shopArea,shopAddr,shopLong,shopLat);
           userId.push(res.Review[i].UserId);
           Review.push(res.Review[i].UserReview);
           myDate.push(res.Review[i].date);
+          myrate.push(res.Review[i].UserRating);
+
         }
          var myData = userId.map(function(value, index) {
     return {
         name: value,
         review: Review[index],
-        date: myDate[index]
+        date: myDate[index],
+        rate: myrate[index]
       }
   });
+         var sum=0;
+         for(var i=0;i<myrate.length;i++){
+          sum=sum+myrate[i];
+         }
+         sum=sum/myrate.length;
+         $scope.shopRate=sum;
         console.log($scope.product);
         console.log(myData);
         $scope.Reviews=myData;
+       
+
 }
     });
      $scope.hello=function(){
@@ -325,15 +266,28 @@ $window.location.reload(true);
 
 }]).controller('userReviews', ['$scope', 'myService', '$stateParams', '$location','$state','$window',function ($scope,myService,$stateParams,$location,$state,$window){
   //$window.location.reload(true);
+     $scope.doRefresh = function() {
+$window.location.reload(true);
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+    
+  }
   $scope.This=false;
   $scope.hello=function(){
 $window.location.reload(true);
  }
+  $scope.rating = 4;
+  $scope.data = {
+    rating : 3,
+    max: 5
+  }
+ $scope.readOnly = true;
   $state.go($state.current, {}, {reload: true});
       var userId=[];
       var shopid=[];
     var Review=[];
     var myDate=[];
+    var myrate=[];
    var obj={abc:"abc"};
     myService.getUserReview(obj).success(function (res) {
       if(res==false){
@@ -351,6 +305,7 @@ $window.location.reload(true);
           userId.push(res.Review[i].shopName);
           Review.push(res.Review[i].UserReview);
           myDate.push(res.Review[i].date);
+           myrate.push(res.Review[i].UserRating);
         }
          var myData = userId.map(function(value, index) {
     return {
@@ -358,12 +313,13 @@ $window.location.reload(true);
         name: value,
         sid:shopid[index],
         review: Review[index],
-        date: myDate[index]
+        date: myDate[index],
+         rate: myrate[index]
       }
   });
-        console.log(myData);
-
+       
         $scope.Reviews=myData;
+        
 }
     });
   
@@ -375,6 +331,17 @@ $window.location.reload(true);
     console.log($scope.pic);
   }
     
+}]).controller('about', ['$scope', 'myService','$location','$window', function ($scope, myService,$location,$window) {            
+
+  $scope.doRefresh = function() {
+$window.location.reload(true);
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+    
+  }
+     $scope.hello=function(){
+$window.location.reload(true);
+ }
 }]).controller('Maps', ['$scope', 'myService','$state','$location','$ionicModal','$window', function ($scope, myService,$state,$location,$ionicModal,$window) {
   var map;
   $scope.focus=false;
@@ -395,6 +362,7 @@ var gKey;
  $scope.hello=function(){
 $window.location.reload(true);
  }
+
 var globalCat=null;
 var mapCat=null;
 //$scope.mylist=false;
@@ -680,7 +648,7 @@ $scope.eduFunction=function(myid){
         {categoryId : 1, name : "Cafe", slug: "Cafe",keyword:"cafe" },
         {categoryId : 2, name : "Chaat & Gola Shop", slug: "chaatGolaShop",keyword:"cafe"},
         {categoryId : 3, name : "Coconut", slug: "Coconut" ,keyword:"grocery_or_supermarket"},{categoryId : 4, name : "Dhaba", slug: "Dhaba" ,keyword:"cafe"},
-        {categoryId : 5, name : "Restaurants", slug: "Restaurants" ,keyword:"restaurant"},{categoryId : 6, name : "Soup", slug: "Soup" ,keyword:"restaurant"}
+       {categoryId : 5, name : "Soup", slug: "Soup" ,keyword:"restaurant"},{categoryId : 6, name : "Chinese", slug: "Chinese" ,keyword:"restaurant"},{categoryId : 7, name : "BBQ", slug: "BBQ" ,keyword:"restaurant"},{categoryId : 8, name : "Fast Food", slug: "fastFood" ,keyword:"restaurant"},{categoryId : 9, name : "Ice Cream Parlour", slug: "iceCream" ,keyword:"restaurant"}
         ];
 
   
@@ -796,7 +764,7 @@ $ionicModal.fromTemplateUrl('kids-modal.html', {
    $scope.choosehouseHold=[
              { categoryId : 0, name : "Choose Category", slug: "Choose Category" ,keyword:null},
         {categoryId : 1, name : "Computer", slug: "Computer",keyword:"electronics_store" },
-        {categoryId : 2, name : "Electronics Appliances", slug: "electronicAppliances",keyword:"electronics_store"},
+        {categoryId : 2, name : "Electronic Appliances", slug: "electronicAppliances",keyword:"electronics_store"},
         {categoryId : 3, name : "Electric Items", slug: "Electronics" ,keyword:"electronics_store"},{categoryId : 4, name : "Furniture", slug: "Furniture" ,keyword:"furniture_store"},
         {categoryId : 5, name : "Hardware", slug: "Hardware" ,keyword:"furniture_store"},{categoryId : 6, name : "Paints", slug: "Paints" ,keyword:"painter"},{categoryId : 7, name : "Sanitary", slug: "Sanitary" ,keyword:"plumber"}, {categoryId : 8, name : "Mobile", slug: "Mobile" ,keyword:"electronics_store"}  ];
 
@@ -825,7 +793,7 @@ $ionicModal.fromTemplateUrl('kids-modal.html', {
 {categoryId : 7, name : "Zoo", slug: "zoo" ,keyword:"zoo"}, 
 {categoryId : 8, name : "Bank", slug: "bank" ,keyword:"bank"},
 {categoryId : 9, name : "Bar", slug: "bar" ,keyword:" bar"},
-{categoryId : 10, name : "Beauty Saloon", slug: "beauty_salon" ,keyword:"beauty_salon"},
+{categoryId : 10, name : "Beauty Salon", slug: "beauty_salon" ,keyword:"beauty_salon"},
 {categoryId : 11, name : "Bowling Alley", slug: "bowling_alley" ,keyword:"bowling_alley"},
 {categoryId : 12, name : "Bus Station", slug: "bus_station" ,keyword:"bus_station"},
 {categoryId : 13, name : "Campground", slug: "campground" ,keyword:"campground"},
@@ -1147,23 +1115,27 @@ $scope.mapItem=true;
     content: contentString,
     maxWidth: 200
   });
+ 
+      
          var myLl = new google.maps.LatLng(res[i].shopLat, res[i].shopLong);
         var marker = new google.maps.Marker({
         position: myLl,
+        icon:"img/l.png",
        title:res[i].shopName
       });
-     marker.addListener('click', toggleBounce);
-       marker.addListener('click', function() {
+             marker.addListener('click', toggleBounce);
+         marker.addListener('click', function() {
            infowindow.open(map, marker);
             });
-    }
-    function toggleBounce() {
+            function toggleBounce() {
   if (marker.getAnimation() !== null) {
     marker.setAnimation(null);
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
 }
+      marker.setMap(map);
+    }
      var myData = shopname.map(function(value, index) {
     return {
         name: value,
@@ -1277,5 +1249,6 @@ clickone(store);
 
 }
 }]);
+
 
 
